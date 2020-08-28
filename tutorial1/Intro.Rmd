@@ -1,0 +1,543 @@
+---
+title: "An Introduction to R"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Hello R 
+
+## Introduction
+
+### What is R?
+
+R is a language for statistical computing and graphics. 
+
+You can learn more about R at [r-project.org](https://www.r-project.org/about.html) and [An Introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.html).
+
+### Why is R a good choice for analysis 
+R is distributed for free (under the GNU General Public License) and used by many people around the world to analyse data.  
+
+Some statistical software such as SPSS and PRISM are designed that you run analysis by clicking on menus and selecting the analysis to run. This is a quick way to get started, but in the long run can cost more of your time than software based on programming. 
+
+To use R you will need to learn to write commands. This has many advantages compared with point-and-click software, including the ability to quickly re-run analysis if the data change, and reproducibility. There is a steeper learning curve than point-and-click software, but investing in learning R may pay handsome dividends. There are many books, online forums and other sources for help learning R. 
+
+### Learning objective
+
+In this interactuve tutorial you will be introduced to concepts and asked to edit and run blocks of R code as you go. The learning objective is to understand some of the important principles of R that are needed to analyse data. 
+
+## Using R as a calculator
+
+We begin by introducing the process of how to write commands for the R software. 
+
+You can use R like a calculator. For example, to work out 10 times 20 we just enter the following. Run the code to get the answer.
+```{r evalute-mult, exercise=TRUE}
+10 * 20
+```
+R also handles fractions. For instance, what is two thirds expressed as a number?
+```{r evaluate-frac, exercise=TRUE}
+2/3
+```
+*Now your turn. Ask R to calculate 123 + 125*
+
+```{r evalute-add, exercise=TRUE}
+
+```
+The elementary arithmetic operators are the usual `+`, `-`, `*`, `/`, and `^` (raise to a power).
+
+*Now your turn - ask R to calculate three squared by using the `^' operator* 
+
+```{r evalute-square, exercise=TRUE}
+
+```
+```{r evalute-square-solution}
+3^2
+```
+
+
+## Functions I 
+
+The first lesson for computer programming languages is to learn how to print "hello world". The following code shows how this may be done in R. Please run the code chunk using the button and see what output R gives.
+```{r hello-world-2, exercise=TRUE}
+print("hello world")
+```
+Technically what we did was given an input ("hello world") to a function called `print()`. In this example the quotation marks are important -  without them print won't work. The function `print()` then does what it says it does. 
+ 
+
+*Now it is your turn. Ask R to pose the question "why did the chicken cross the road?" Do this by replacing the blank __ with the text you need and then run the code.*
+```{r chicken-road, exercise=TRUE}
+print("__")
+```
+```{r chicken-road-hint}
+print("Why did the..")
+```
+So, in summary
+
+- `print(__)' is an example of a **function**. 
+- You give functions some sort of *input* (here "hello world" etc), and 
+- It then does something with the input and returns *output* (here printing out "hello world" etc).  
+
+To use R effectively you will learn to make use of many functions. They are how we do analysis.
+
+Other examples in R include all the common arithmetic functions found on a calculator, such as `log`, `exp`, `sin`, `cos`, `tan`, `sqrt`, and so on.
+
+*Task for you: write some code to calculate the square root of 4*
+```{r exercise-sqrt, exercise=TRUE}
+
+```
+```{markdown exercise-sqrt-hint}
+Use the `sqrt()` function, and give it the input value of 4 between the brackets.
+```
+
+## Naming objects 
+
+In R we can also save or 'assign' (or save, write) values to an 'object' (something that represents the data, or results of an analysis or other aspect). This is needed for most analysis. 
+
+For example, the following 'assigns' the value 2/3 to an object called `myval' (there is nothing special about 'myval', it is a name that I chose, you could call it anything that makes sense for the code depending on context). 
+```{r save-myval, echo=TRUE}
+myval = 2/3
+```
+If you run this in R then there will be no output, but this is expected. This is because we have just told R what 'myval' is, not asked it to do anything with it. If we want to get some output we need to ask R to do something. For example, to print it out we can just write the name of the object ('myval' here). Try with the following   
+```{r print-myval, exercise=TRUE}
+myval = 2/3
+myval
+```
+The same is achieved by using the `print()` function
+```{r print-myval2, exercise=TRUE}
+myval = 2/3
+print(myval) 
+```
+In R writing the name of the object usually prints out information on what the object is or contains (here it is a number equal to 0.66667).
+
+## Vectors 
+
+So far we have used R like a calculator, looking at single numbers. Usually datasets are much larger! 
+
+More generally R operates on things called *data structures* (jargon, but worth learning in order to follow the help files in R).
+
+The simplest *data structure* is the numeric *vector*, which is an ordered collection of numbers (and the most simple vector is just a number - a vector with length 1). 
+
+To set up a vector named `x`, say, consisting of five numbers, namely 10.4, 5.6, 3.1, 6.4 and 21.7, then print it out, we use the following R code.
+
+```{r assign-x, echo=TRUE}
+x = c(10.4, 5.6, 3.1, 6.4, 21.7)
+x
+```
+`c()` is a type of *function*, like `print` earlier. The function `c()` puts the numbers together into a vector (concatenation).
+
+*TASK FOR YOU Now try to repeat what we did by entering a vector `x2` with elements 1,2,3,4. The code is started - you need to replace __ with the correct command.*
+
+```{r assign-x2, exercise=TRUE}
+x2 = c(__)
+x2
+```
+```{markdown assign-x2-hint}
+Enter the elements 1,2,3,4 between the brackets in c().
+```
+
+Part of the power of naming objects like vectors, is that we can use them to represent the data in our analysis. For example, we can do some maths using a vector, as we did for numbers above. The following statement displays the reciprocals of the values in `x` (but doesn't assign those values to any variable):
+
+```{r invert-x, exercise=TRUE}
+x = c(10.4, 5.6, 3.1, 6.4, 21.7)
+1/x
+
+```
+We can also use them to create new datasets. The following code uses `x` to create a vector `y` with 11 entries consisting of two copies of x with a zero in the middle place.
+
+```{r concat-x, exercise=TRUE}
+x = c(10.4, 5.6, 3.1, 6.4, 21.7)
+y = c(x, 0, x)
+y
+```
+There are many functions that can be applied to vectors. Some that are useful to calculate summary statistics are:
+
+- `max` and `min` select the largest and smallest elements of a vector, respectively. 
+- `length(x)` is the number of elements in `x`, 
+- `sum(x)` gives the total of the elements in `x`, 
+- `mean(x)` gives the mean (sum divided by length)
+- `sd(x)` gives the standard deviation
+
+```{r function-vector, exercise=TRUE}
+x = c(10.4, 5.6, 3.1, 6.4, 21.7)
+min(x)
+max(x)
+length(x)
+sum(x)
+mean(x)
+```
+
+*Now your turn. Calculate the standard deviation of the data saved in x, by adding the correct term to the code below by replacing __ *
+
+```{r function-vector2, exercise=TRUE}
+x = c(10.4, 5.6, 3.1, 6.4, 21.7)
+sd(__)
+```
+
+
+## Getting help in R
+R relies on you remembering the names of functions used for your analysis. If you forget how they work or want guidance then one nice thing about R is it is easy to get help. 
+
+For example, suppose you forgot what `mean()` does. You would do this by entering ?mean. 
+
+```{r, echo=TRUE}
+?mean
+
+```
+
+*TASK FOR YOU Get the R help for the `mean()` function *
+
+```{r gethelp-c, exercise=TRUE}
+
+
+```
+You can also get help from the web, such as for [mean](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/mean) (same as obtained by `?mean`) 
+
+The examples at the bottom of the help file are often the most practically useful part of the help file. 
+
+## Functions II 
+
+A function can sometimes have more than one `argument`. That is, we can give it more than one input. 
+
+For example, if you look at the help file for `mean()` you'll see that you can specify more than just `mean(x)`. 
+
+You might enter `mean(x, trim=0.1)`. 
+
+Why? The reason for including the extra term `trim=0.1` is if you want R to calculate what is called a *trimmed mean*. In this case it would discard the top and bottom 10% (in total) of the data in `x`. This approach is sometimes used to remove the effect of outliers when giving a estimate of the average - you might think of it as an alternative to the median.
+
+For example, suppose data are 1,1,1,1,1,1,1,1,1,1000. What is the mean, and trimmed mean?
+```{r trim1, exercise=TRUE}
+y = c(1,1,1,1,1,1,1,1,1,1000)
+mean(y)
+mean(y, trim=0.1)
+
+```
+The mean in this case is perhaps not a good description of the centre of the data. Almost all the values are 1, but the mean is over 100. The trimmed mean reduces the influence of the extremes of the data.  
+
+*Task for you: Repeat the analysis but trim the top and bottom 20% of the data)* 
+```{r trim2, exercise=TRUE}
+y = c(1,1,1,1,1,1,1,1,1,1000)
+mean(y, trim=__)
+
+```
+```{markdown trim2-solution}
+The solution is also 1 - removing the top and bottom 20% does not alter the estimate.
+```
+
+*Now try to do all the following steps on your own in the code cell below by filling in the blanks (__). * 
+
+ - Create a vector with elements 1,2,3,4,5,60. 
+ - Calculate the mean
+ - Calculate the trimmed mean where `trim=0.2` 
+
+```{r trim3, exercise=TRUE}
+y = c(__)
+mean(__)
+mean(__, trim=__)
+
+```
+For many analysis you will pass the analysis function the data to be analysed, plus other information (arguments to the function) to give details on what sort of analysis should be done. There are more examples coming later in this tutorial.
+
+## Logical variables
+
+In data analysis it is often very useful to work with logical quantities. For example, if you wish to identify all people aged 60y+ you could define a logical vector to have the values `TRUE`, `FALSE` (or `NA` for "not available") based on a person's age. 
+
+Logical vectors are generated by *conditions*. The following expression, for example, sets `oldage` as a vector of the same length as `age` with values `FALSE` corresponding to elements of `age` where the condition is not met and `TRUE` where it is (i.e. TRUE if older than 60):
+
+
+```{r logic1, exercise=TRUE}
+age = c(50, 51, 55, 60, 65, 99)
+oldage = age > 60
+age
+oldage
+```
+The basic logical operators are `<`, `<=`, `>`, `>=`, `==` for exact equality, and `!=` for inequality
+For example, does 2 equal 3?
+```{r logic2, exercise=TRUE}
+2 == 3
+```
+Is 2 NOT EQUAL to 3?
+```{r logic3, exercise=TRUE}
+# Is 2 NOT EQUAL to 3?
+2!=3
+```
+
+**TASK FOR YOU** write code to test whether any of the ages are equal to 65?
+```{r logic4, exercise=TRUE}
+age = c(50, 51, 55, 60, 65, 99)
+age __ 65 
+```
+```{markdown logic4-hint}
+Use the double equal sign `==`
+```
+
+## Missing values
+
+Sometimes there will be missing value in your data. When an element or value is "not available" or a "missing value" you can reserve a place for it within a vector by assigning it the special value `NA`. In general, any operation on an `NA` becomes an `NA`. e.g NA + 1 = NA. The function `is.na(x)` gives a logical vector of the same size as `x` with value `TRUE` if and only if the corresponding element in `x` is `NA`:
+
+```{r missing1, exercise=TRUE}
+z = c(1:3,NA)
+z
+ind = is.na(z)
+ind
+```
+
+There is also is a second kind of "missing" value, the NaN or not-a-number, which is produced by numerical computation that cannot be sensibly performed:
+
+```{r nan1, exercise=TRUE}
+90/0
+0/0
+Inf - Inf
+```
+
+**TASK FOR YOU** Create a vector with elements 1,2,3,4,NA. Calculate the mean using the function `mean()`, and see what happens.
+
+```{r nan2, exercise=TRUE}
+myvec = c(__)
+mean(__)
+```
+R functions may complain if there are missing data. This is useful if you didn't notice it! If you want to ignore it in the `mean()` function, you can by adding `na.rm=TRUE` to the function call.
+
+*Do this below *
+
+```{r nan3, exercise=TRUE}
+myvec = c(1,2,3,4,NA)
+mean(myvec, __)
+```
+## Character vectors
+
+Text or character quantities and character vectors are used frequently in R, for example as plot labels. They're defined by a sequence of characters inside double quotes, for example:
+
+```{r charac, exercise=TRUE}
+"x-values"
+"New iteration results"
+```
+
+The double quotes are important - they tell R that you have a string of text. This is why they were needed to print out "hello world" earlier. Without the quotations R will try to do some analysis. For example it will interpret x-values as `x` minus `values` and look to find any named objects called `x` and `values` to do this - if it can't find then you'll get an error message. Try it out:
+```{r characb, exercise=TRUE, error=TRUE}
+x-values
+```
+
+
+As with numbers, character vectors may be concatenated into a vector using the `c()` function. 
+
+```{r charac2, exercise=TRUE}
+labs = c("Label 1", "Label 2")
+labs
+```
+
+**TASK FOR YOU** Create a vector with the labels: red, blue, green. Print out.
+
+```{r charac3, exercise=TRUE}
+
+```
+```{markdown charac3-hint}
+Copy the code above and change the "Label 1"  to "red" etc 
+```
+
+## Index vectors; selecting and modifying subsets of a data set
+
+Subsets of the elements of a vector may be selected in several different ways to do this. We introduce three next.
+
+### (1) A logical vector
+
+This selects elements to include using an *index vector* of the same length as the vector from which elements are to be selected. 
+
+The vector values corresponding to `TRUE` in the index vector are selected and those corresponding to `FALSE` are omitted. 
+
+For example, the following example 
+
+- has a vector `x` that includes some missing values
+- `includeme` is defined to be `TRUE` is the value is not missing (`!` means NOT, `is.na()` is a function that checks for `NA` and returns `TRUE` if so)
+- square brackets let one select which elements in `x` to include
+- the results is assigned to `y` 
+- so `y` contains the non-missing values of `x`, in the same order, and if `x` has missing values, `y` is shorter than `x`.
+
+```{r logicvec, exercise=TRUE}
+x = c(50, 51, 55, 60, 65, 99, NA, NA, NA)
+includeme = !is.na(x) 
+y = x[ includeme ]
+x
+includeme
+y
+```
+
+Not everyone who uses R uses this approach to select subsets of the data.
+
+### (2) Subset function
+
+Another approach to select a subset of the data where rows meet a condition is to use `subset` function. It can achieve the same as the indexing approach above, but is perhaps easier to see what it happening when looking at the code. Here is an example of the same operations as above, but using `subset()`.
+```{r logicvecb, exercise=TRUE}
+x = c(50, 51, 55, 60, 65, 99, NA, NA, NA)
+includeme = !is.na(x) 
+y = subset(x, includeme)
+x
+includeme
+y
+```
+*Task for you: print out the values of age that are more than 60. Do this using the index and subset approach by filling in the __ parts*
+
+```{r logicvecc, exercise=TRUE}
+age = c(50, 51, 55, 60, 65, 99)
+oldage = age __ 60
+age[__]
+subset(age, __)
+```
+
+### (3) A vector of the positions wanted
+
+Another way to select which parts of the data we are interested in is to specify the positions. The following selects different parts of the data in `x`.
+
+```{r logicvec2, exercise=TRUE}
+x = c(50, 51, 55, 60, 65, 99)
+
+x[2]    # The second component of x
+x[1:3] # Selects the first 3 elements of x 
+x[ c(1,2,3) ] #Another way to select the first 3 elements of x
+```
+
+*TASK FOR YOU Select the 1st, 2nd and 4th element of `x` and print out*
+
+```{r logicvec3, exercise=TRUE}
+x = c(50, 51, 55, 60, 65, 99)
+x[ c(__, __, __) ]
+
+```
+
+### (4) Other methods
+
+If you use R beyond this course I'd recommend to learn the `tidyverse` approach to manipulating data. It has an even steeper initial learning curve than the above, BUT is very much more powerful and useful.
+
+## Other data structures
+
+Vectors are an important type of object in R, and if you understand the above then it is easier to work with other structures. These two re quite useful to understand --
+
+- *Data frames* are matrix-like structures in which the columns can be of different types. Think of data frames as 'data matrices' with one row per observational unit but with (possibly) both numerical and categorical variables. Many experiments are best described by data frames: the treatments are categorical but the response is numeric. See [Data frames](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Data-frames).
+
+- *Factors* provide compact ways to handle categorical data. See [Factors](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Factors). 
+
+
+## A simple analysis
+
+To end we show some code following the process for a basic data analysis. Namely
+
+- Get data
+- Calculate summary statistics
+- Do some plots
+
+### Get data
+
+The first thing to do in R is to load data. For this tutorial we will use R to make up some data (using computer simulation). 
+
+Our data will be two random normal vectors of x- and y-coordinates where y = x + error.
+
+```{r, echo=TRUE}
+# Note: Anything with an hash at the start is interpreted in R as a comment, and does not do anything
+
+# 1. The first data vector are 20 sampes from a standard Normal distribution (mean 0, sd 1)
+myvar1 = rnorm(20)
+
+# 2. The second data vector are 20 samples equal to the first data vector plus the first data vector multiplied by another standard normal distribution. 
+myvar2 = myvar1 + rnorm(20)
+
+# 3. Then we can put them into a data frame, which is used to store data in a table (each row is a vector) 
+dummy = data.frame(x=myvar1, y=myvar2)
+
+#4. We can print out the data so you can see it 
+dummy
+```
+(Every time you run this, you'll get different numbers in your table because a new simulation is run).
+
+### Summary statistics
+
+To get a quick summary of these data R has the useful function `summary()`
+
+```{r, echo=TRUE}
+summary(dummy)
+```
+
+This tells us the minimm, maximum, median, mean, 1st quantile (75% of data above this point) and 3rd quantile (25% of data above this point) for our `x` and `y` columns, that we made up.
+
+We can also do this one statistic at a time by runnning the function (e.g. `mean()`) on a vector of data. To select a column from a dataframe one may use a dollar `$` following the dataframe name, followed by the column name. For example, to only select `x` from `dummy`:
+
+```{r, echo=TRUE}
+#To access each column we use a dollar sign
+#e.g. x
+dummy$x
+```
+
+**TASK FOR YOU** Print out summary statistics for x only by replacing __
+```{r exsummary, exercise=TRUE}
+summary(dummy__x)
+```
+```{markdown exsummary-hint}
+We want to pass `dummy$x` to the function `summary()` 
+```
+**TASK FOR YOU** Calculate the mean of the first 10 values of `y`
+```{r exsummary2, exercise=TRUE}
+mean(dummy$__[__])
+```
+```{markdown exsummary2-hint}
+Review the material in index vectors for what goes inside [__] 
+```
+
+We may also calculate correlation coefficients between x and y as follows.
+
+```{r, echo=TRUE}
+cor.test(dummy$x, dummy$y)
+```
+**TASK FOR YOU** Calculate the Spearman correlation between x and y by typing "spearman" into the method argument
+
+```{r spearman, exercise=TRUE}
+cor.test(dummy$x, dummy$y, method=__)
+```
+
+**TASK FOR YOU** Calculate Pearson correlation between x and itself (should be 1)
+
+```{r pearson-self, exercise=TRUE}
+cor.test(dummy__, dummy__)
+```
+
+### Plots
+
+We will next show some simple R plots (in time you might wish to use `ggplot2`, which has greater functionality but has a steeper learning curve). 
+
+First, we'll plot x against y in a scatter plot.
+```{r, echo=TRUE}
+##This is a standard R scatterplot
+plot(dummy$x, dummy$y)
+```
+
+To add more and customise the plot we can use other arguments to the function `plot()`. Below adds some labels to x, y axes, and a title.
+
+```{r, echo=TRUE}
+##This is a standard R scatterplot, but now we've added some labels to the plot
+plot(dummy$x, dummy$y, xlab="TEMPERATURE", ylab="CONSUMPTION OF CHOCOLATE ICE CREAM", main="I love ice cream when it is hot")
+```
+
+You will often wish to save the chart and put it into a report. To do this the recipe is
+
+- Open up the file writer. If you want to write to a PDF then the function is `pdf()`. If you want to write to a PNG it is `png()`; others include `jpeg()`, `tiff()`, `eps()`. 
+- Do all the commands for your plots
+- Write the file by closing the connection to the output file with `dev.off()`.
+
+For example, the following code follows this to write the above chart to a pdf file called `myplot.pdf` in a directory called `charts`. 
+```{r, echo=TRUE, results='hide'}
+pdf("charts/myplot.pdf")
+plot(dummy$x, dummy$y, xlab="TEMPERATURE", ylab="CONSUMPTION OF CHOCOLATE ICE CREAM", main="I love ice cream when it is hot")
+dev.off()
+```
+
+So now you know how to produce a simple scatter plot in R, and save it.
+
+**TASK FOR YOU** Reverse the axes - plot `x` on the y-axis and `y` on the x-axis. Add some different labels (make them up)
+```{r plot-example, exercise=TRUE}
+plot(dummy$__, dummy$__, xlab = __, ylab = __, main = __ )
+
+```
+## Conclusion
+
+This is the end of the tutorial.
