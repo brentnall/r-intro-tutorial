@@ -2,8 +2,8 @@
 
 ## Tutorials for R with `learnr`
 
-Tutorial 1, Hello R: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/brentnall/r-intro-tutorial/master?urlpath=shiny/tutorial1/)
-
+Tutorial 1, Hello R: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/brentnall/r-intro-tutorial/master?urlpath=shiny/tutorial1/Intro.Rmd)
+http://mybinder.org/v2/gh/brentnall/r-intro-tutorial
 # License
 
 GNP GPL v3
