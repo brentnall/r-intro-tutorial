@@ -2,7 +2,8 @@
 
 ## Tutorials for R with `learnr`
 
-Tutorial 1, Hello R: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/brentnall/r-intro-tutorial/master?urlpath=shiny/tutorial1/Intro.Rmd)
+- Tutorial 1, Hello R: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/brentnall/r-intro-tutorial/master?urlpath=shiny/tutorial1/Intro.Rmd)
+- Tutorial 2, Hello Data Analysis: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/brentnall/r-intro-tutorial/master?urlpath=shiny/tutorial2/DataAnal.Rmd)
 
 # License
 
