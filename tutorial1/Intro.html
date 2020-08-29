@@ -514,7 +514,7 @@ dummy = data.frame(x=myvar1, y=myvar2)
 dummy</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"-0.72310838","2":"0.4183128"},{"1":"2.28879973","2":"2.5033449"},{"1":"0.63182828","2":"0.2182885"},{"1":"-1.74262827","2":"-0.8932104"},{"1":"-0.06097547","2":"-0.6921039"},{"1":"-1.20343019","2":"-1.9366055"},{"1":"-0.34746170","2":"-0.5706485"},{"1":"-1.93051649","2":"-3.0413305"},{"1":"-1.38998217","2":"-2.3360673"},{"1":"0.88721665","2":"1.7138690"},{"1":"-0.20391866","2":"-0.9768530"},{"1":"-0.44017241","2":"-1.2523637"},{"1":"0.24841870","2":"2.1778172"},{"1":"0.32098582","2":"0.6701645"},{"1":"0.40157634","2":"0.6881308"},{"1":"-1.07570750","2":"-0.9631595"},{"1":"-0.56312772","2":"-0.4984902"},{"1":"-0.18380982","2":"-0.1344913"},{"1":"1.63985172","2":"2.7647638"},{"1":"0.20995455","2":"1.3549003"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.70869684","2":"1.7070368"},{"1":"0.04316125","2":"0.5253311"},{"1":"-2.01046814","2":"-3.4088441"},{"1":"0.85775739","2":"0.1827861"},{"1":"1.71166815","2":"0.4781568"},{"1":"-0.37602666","2":"-2.3293922"},{"1":"0.31581594","2":"0.6833618"},{"1":"2.62866439","2":"1.7703604"},{"1":"-1.32715219","2":"-1.1040124"},{"1":"-1.79300577","2":"-0.4942393"},{"1":"-0.77366502","2":"-0.9546152"},{"1":"-0.41571051","2":"-0.2240538"},{"1":"0.32671564","2":"2.5585445"},{"1":"1.59752982","2":"1.2901800"},{"1":"0.26055643","2":"-0.8652818"},{"1":"-0.74858033","2":"-1.1740056"},{"1":"-0.77292512","2":"-0.3374007"},{"1":"1.10992665","2":"0.2279928"},{"1":"1.18509244","2":"-0.3201226"},{"1":"-0.09666616","2":"1.0180545"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>(Every time you run this, you’ll get different numbers in your table because a new simulation is run).</p>
@@ -524,21 +524,21 @@ dummy</code></pre>
 <p>To get a quick summary of these data R has the useful function <code>summary()</code></p>
 <pre class="r"><code>summary(dummy)</code></pre>
 <pre><code>##        x                 y           
-##  Min.   :-1.9305   Min.   :-3.04133  
-##  1st Qu.:-0.8113   1st Qu.:-0.96658  
-##  Median :-0.1939   Median :-0.31649  
-##  Mean   :-0.1618   Mean   :-0.03929  
-##  3rd Qu.: 0.3411   3rd Qu.: 0.85482  
-##  Max.   : 2.2888   Max.   : 2.76476</code></pre>
+##  Min.   :-2.0105   Min.   :-3.40884  
+##  1st Qu.:-0.7547   1st Qu.:-0.88762  
+##  Median : 0.1519   Median :-0.02063  
+##  Mean   : 0.1216   Mean   :-0.03851  
+##  3rd Qu.: 0.9208   3rd Qu.: 0.76704  
+##  Max.   : 2.6287   Max.   : 2.55855</code></pre>
 <p>This tells us the minimm, maximum, median, mean, 1st quantile (75% of data above this point) and 3rd quantile (25% of data above this point) for our <code>x</code> and <code>y</code> columns, that we made up.</p>
 <p>We can also do this one statistic at a time by runnning the function (e.g. <code>mean()</code>) on a vector of data. To select a column from a dataframe one may use a dollar <code>$</code> following the dataframe name, followed by the column name. For example, to only select <code>x</code> from <code>dummy</code>:</p>
 <pre class="r"><code>#To access each column we use a dollar sign
 #e.g. x
 dummy$x</code></pre>
-<pre><code>##  [1] -0.72310838  2.28879973  0.63182828 -1.74262827 -0.06097547 -1.20343019
-##  [7] -0.34746170 -1.93051649 -1.38998217  0.88721665 -0.20391866 -0.44017241
-## [13]  0.24841870  0.32098582  0.40157634 -1.07570750 -0.56312772 -0.18380982
-## [19]  1.63985172  0.20995455</code></pre>
+<pre><code>##  [1]  0.70869684  0.04316125 -2.01046814  0.85775739  1.71166815 -0.37602666
+##  [7]  0.31581594  2.62866439 -1.32715219 -1.79300577 -0.77366502 -0.41571051
+## [13]  0.32671564  1.59752982  0.26055643 -0.74858033 -0.77292512  1.10992665
+## [19]  1.18509244 -0.09666616</code></pre>
 <strong>TASK FOR YOU</strong> Print out summary statistics for x only by replacing __
 <div class="tutorial-exercise" data-label="exsummary" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>summary(dummy__x)</code></pre>
@@ -561,13 +561,13 @@ dummy$x</code></pre>
 ##  Pearson&#39;s product-moment correlation
 ## 
 ## data:  dummy$x and dummy$y
-## t = 7.6087, df = 18, p-value = 4.968e-07
+## t = 3.8398, df = 18, p-value = 0.0012
 ## alternative hypothesis: true correlation is not equal to 0
 ## 95 percent confidence interval:
-##  0.7023210 0.9490959
+##  0.3250195 0.8585943
 ## sample estimates:
 ##       cor 
-## 0.8733972</code></pre>
+## 0.6710278</code></pre>
 <p><strong>TASK FOR YOU</strong> Calculate the Spearman correlation between x and y by typing “spearman” into the method argument</p>
 <div class="tutorial-exercise" data-label="spearman" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>cor.test(dummy$x, dummy$y, method=__)</code></pre>
@@ -610,7 +610,7 @@ dev.off()</code></pre>
 </div>
 <div id="section-conclusion" class="section level2">
 <h2>Conclusion</h2>
-THE END. 
+This is the end of the tutorial. 
 <script type="application/shiny-prerendered" data-context="server-start">
 library(learnr)
 knitr::opts_chunk$set(echo = FALSE)

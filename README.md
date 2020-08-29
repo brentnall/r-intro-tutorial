@@ -1,19 +1,17 @@
-# Introduction to R interactive tutorials 
+# Some interactive tutorials to learn R 
 
-## Interactive Tutorials for R with `learnr`
+## Tutorials for R with `learnr`
 
-[**learnr**](https://rstudio.github.io/learnr/) packages are creating R tutorials with shiny apps running under the hood. Normally, running them require you to run a server or purchase [shiny apps](https://www.shinyapps.io) hosting service.
+Tutorial 1, Hello R: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/brentnall/tutorial-learnr/tutorial1/master?urlpath=shiny/tutorial1/)
 
-However, Binder service can provide an alternative. Following are two examples of `learnr` tutorials running on Binder.
+# License
 
-shiny/test1: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/syoh/learnr-tutorial/master?urlpath=shiny/test1/)
-
-shiny/test2: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/syoh/learnr-tutorial/master?urlpath=shiny/test2/)
+GNP GPL v3
 
 ## Developing/Troubleshooting Tutorials
 
-The Binder image has Jupyter notebook with R and RStudio installed. Rstudio can be invoked to develop and troubleshoot tutorials. Following Binder links will show you how to get to these endpoints
+RStudio: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/brentnall/tutorial-learnr/master?urlpath=rstudio)
 
-R + Jupyter notebook: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/syoh/learnr-tutorial/master?filepath=index.ipynb)
+## Acknowledgements
 
-RStudio: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/syoh/learnr-tutorial/master?urlpath=rstudio)
+Thanks to [syoh](https://github.com/syoh/learnr-tutorial) for the showing the process.

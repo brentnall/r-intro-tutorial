@@ -5,5 +5,3 @@ dependencies:
   - r-tidyverse
   - r-shinydashboard
   - r-learnr
-  - r-nycflights13
-  - r-Lahman
