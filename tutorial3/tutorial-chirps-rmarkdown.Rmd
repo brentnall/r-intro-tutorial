@@ -1,0 +1,78 @@
+---
+title: Tutorial- simple linear regression example
+output: html_document
+---
+# Instructions
+
+In this tutorial you will be asked to run some code to load a CSV file (data), do a scatter plot, calculate a correlation coefficient and fit a linear regression. Data and an R script to do this have been provided in this project. This file provides some background and further explanation of the script.
+
+# Cricket chirps
+    
+The data, obtained from [college.cengage.com](https://college.cengage.com/mathematics/brase/understandable_statistics/7e/students/datasets/slr/frames/frame.html), relates the rate of cricket chirps to temperature from *The Song of Insects*, by Dr. G. W. Pierce, Harvard College Press.
+
+In this example we're looking at the relationship between the count of chirps per minute and temperature.
+
+## Load the data
+
+The data are already saved in the project as "chirps.csv". To load the data into R and show the first few rows, use the following commands.
+  
+ ```r
+mydta <- read.csv("chirps.csv")
+
+head(mydta)
+```
+    
+## Plot the data
+
+We next run code to create a scatter plot. 
+
+```r
+plot(mydta)
+```
+
+When you run this the chart is shown in a graphics window.
+
+If we want to save this as a PNG file, for example to put into a Word document, then we may do so as follows.
+
+```r
+png("plot1.png")
+    
+plot(mydta)
+
+dev.off()
+```
+
+After running this the chart will be saved in the project folder. 
+    
+
+## Correlation
+
+What is Pearson's estimated correlation coefficient?
+
+```r
+cor.test(mydta[,1], mydta[,2])
+```
+
+## Linear regression
+
+We can fit a linear model to the data. This assumes that a line that describes the relationship between the independent (cricket chirps) and the dependent (temperature) variables. With a simple data set like we're using here, you can visualize the line on a simple x-y plot: the x-axis is the independent variable (chirp count in this example), and the y-axis is the independent variable (temperature). 
+   
+Fitting the data means plotting all the points, then drawing the best-fit line through that data. The regression line is of the form `y =  a + b*x`, where b is the coefficient or slope of the line, and a is the intercept of the line at x=0.
+
+When the following code is run the output of a linear regression in R is printed. 
+
+```r
+mylm<-lm(Temperature~Chirps.Minute, mydta)
+
+summary(mylm)
+```
+    
+The estimated model is y = 25.2 + 3.2x. Therefore, if our themometer was broken and we wished to measure the temperature using cricket chirps, we'd estimate it to be approximately 25.2C on average if no cricket chirps (x=0), and 25.2 + (3.2 x 2) = 31.6C if two chirps per minute, for example.
+
+## Generalisability
+
+The regression themometer is likely to only be of use in places and time of the year similar to where the data were gathered. For example, this themometer would be useless in the UK. 
+
+# Next steps
+
+Try to repeat this project by creating a new project in your workspace and typing and running the R script yourself.
