@@ -16,19 +16,18 @@ In this example we're looking at the relationship between the count of chirps pe
 
 The data are already saved in the project as "chirps.csv". To load the data into R and show the first few rows, use the following commands.
   
- ```r
+ ```{r, echo=TRUE}
 mydta <- read.csv("chirps.csv")
 
 head(mydta)
 
-View(mydta)
 ```
     
 ## Plot the data
 
 We next run code to create a scatter plot. 
 
-```r
+```{r, echo=TRUE}
 plot(mydta)
 ```
 
@@ -51,7 +50,7 @@ After running this the chart will be saved in the project folder.
 
 What is Pearson's estimated correlation coefficient?
 
-```r
+```{r, echo=TRUE}
 cor.test(mydta[,1], mydta[,2])
 ```
 
@@ -63,7 +62,7 @@ Fitting the data means plotting all the points, then drawing the best-fit line t
 
 When the following code is run the output of a linear regression in R is printed. 
 
-```r
+```{r, echo=TRUE}
 mylm<-lm(Temperature~Chirps.Minute, mydta)
 
 summary(mylm)

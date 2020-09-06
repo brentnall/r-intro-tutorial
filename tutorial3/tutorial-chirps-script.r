@@ -31,3 +31,8 @@ mylm = lm(Temperature~Chirps.Minute, mydta)
 
 summary(mylm)
 
+plot(mydta)
+
+lines(mydta[,1], predict(mylm), col=2)
+
+plot(mylm)

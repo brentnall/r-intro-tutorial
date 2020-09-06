@@ -28,26 +28,24 @@ Only a few simple analyses are done. For additional learning of R, I suggest tha
 
 Data are already downloaded, and saved in the project (`brca_metabric_clinical_data.tsv`). This is a tab-separated file, and so `read.delim()` is used in place of `read.csv()`. `read.delim()` requires the user to specifiy *what* the separator is, and `"\t"` tells it that it is a tab.
 
-```r
+```{r, echo=TRUE}
 ## 1. Load data
 mydta = read.delim("brca_metabric_clinical_data.tsv", sep="\t")
 
 ## 2. Show first few rows, list column names
 head(mydta)
-## display
-View(mydta)
 ```
 
 ## Summary statistics
 
- ```r
+```{r, echo=TRUE}
 summary(mydta)
 ```
 
 ## Age at diagnosis
 
 The below plots a histogram and boxplot of age on the same plot, with the histogram above the boxplot. The boxplot is orientated horizontally, rather than the default vertical boxplot.
-``` r
+```{r, echo=TRUE}
 par(mfrow=c(2,1))
 
 hist(mydta$Age.at.Diagnosis, xlab="Age", main="Age Histogram")
@@ -60,16 +58,17 @@ boxplot(mydta$Age.at.Diagnosis, xlab="Age", main="Age Boxplot", horizontal=TRUE)
 The same plot as for age is repeated for number of lymph nodes. 
 
 A difference is use of the `breaks=` argument. This tells R that the bins in the histogram should be with 1 (`by=1`), running from 0 to the maximum in the data (`max(ydta$Lymph.nodes.examined.positive, na.rm=TRUE)`. It is necessary to use the `na.rm=TRUE` argument in `max()` because this variable is not know for all women. 
-```r 
+```{r, echo=TRUE} 
 par(mfrow=c(2,1))
 
 hist(mydta$Lymph.nodes.examined.positive, breaks=seq(0,max(mydta$Lymph.nodes.examined.positive, na.rm=TRUE), by=1), col=1, main="")
 
 boxplot(mydta$Lymph.nodes.examined.positive, xlab="Nodes", main="Nodes Boxplot", horizontal=TRUE)
 ```
+
 If we wish to tabulate the number per category, then `table()` can be used as follows.
 
-```r
+```{r, echo=TRUE}
 table(mydta$Lymph.nodes.examined.positive)
 ```
 
@@ -77,7 +76,7 @@ table(mydta$Lymph.nodes.examined.positive)
 
 Next consider the same plots but for tumour size (in mm).
 
-```r
+```{r, echo=TRUE}
 par(mfrow=c(2,1))
 
 hist(mydta$Tumor.Size, xlab="Tumour size", main="Tumour size Histogram")
@@ -91,7 +90,7 @@ Finally, we look at the association between tumour size and lymph nodes. It is e
 
 First, we plot the data
 
-```r
+```{r, echo=TRUE}
 plot(mydta$Tumor.Size, mydta$Lymph.nodes.examined.positive, log="x")
 
 plot(mydta$Lymph.nodes.examined.positive,mydta$Tumor.Size, log="y")
@@ -100,7 +99,7 @@ plot(mydta$Lymph.nodes.examined.positive,mydta$Tumor.Size, log="y")
 This plots size vs nodes, and nodes vs size. We use the `log="x"` argument to put the x-axis on a log scale. This is sometimes useful for insepction of the plots, particularly when some data is a long way from the bulk.
 
 Next let us define node positive vs negative in the data frame, and use this to get summary statistics of tumour size by nodal statue (neg/pos).
-```r 
+```{r, echo=TRUE} 
 mydta$LNpos =  mydta$Lymph.nodes.examined.positive >0
 
 tapply(mydta$Tumor.Size, mydta$LNpos, summary)
@@ -108,7 +107,7 @@ tapply(mydta$Tumor.Size, mydta$LNpos, summary)
 
 We can also plot the distribution of tumour size by nodal status as follows.
 
-```r
+```{r, echo=TRUE}
 sizeneg = subset(mydta$Tumor.Size, mydta$LNpos)
 
 sizepos = subset(mydta$Tumor.Size, !mydta$LNpos)
@@ -121,7 +120,7 @@ hist(sizepos, xlim=c(0,80), breaks=seq(0,200,by=5), col=1)
 ```
 
 To test the hypothesis that mean tumour size is the same in both (independent) groups one might use a t-test, or a non-parametric Wilcoxon test.
-```r
+```{r,echo=TRUE}
 t.test(sizeneg, sizepos)
 
 wilcox.test(sizeneg, sizepos)
@@ -131,7 +130,7 @@ One might sometimes be interested in particular cutpoints. For tumour size, 20mm
 
 First we calculate the number sized more than 20mm positive by nodal status 
 
-```r
+```{r, echo=TRUE}
 npos = c(sum(sizeneg>20, na.rm=TRUE), sum(sizepos>20, na.rm=TRUE))
 
 ntot = c(sum(!is.na(sizeneg)), sum(!is.na(sizepos)))
@@ -144,14 +143,11 @@ ntot
 
 ## proportion
 npos / ntot
-## same as
-mean(sizeneg>20, na.rm=TRUE)
-mean(sizepos>20, na.rm=TRUE)
 ```
 
 Then we can carry a test of the difference in two proportions (based on a z-test) as follows
 
-```r
+```{r, echo=TRUE}
 prop.test(npos, ntot)
 ```
 
