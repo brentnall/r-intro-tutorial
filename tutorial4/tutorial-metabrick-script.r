@@ -9,6 +9,8 @@ mydta = read.delim("brca_metabric_clinical_data.tsv", sep="\t")
 
 head(mydta)
 
+View(mydta)
+
 ## 3. Summary statistics
 
 summary(mydta)

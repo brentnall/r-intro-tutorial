@@ -34,6 +34,8 @@ mydta = read.delim("brca_metabric_clinical_data.tsv", sep="\t")
 
 ## 2. Show first few rows, list column names
 head(mydta)
+## display
+View(mydta)
 ```
 
 ## Summary statistics

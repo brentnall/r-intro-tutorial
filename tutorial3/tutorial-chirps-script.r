@@ -13,6 +13,8 @@ mydta = read.csv("chirps.csv")
 
 head(mydta)
 
+View(mydta)
+
 ## 3. Do a scatter plot
 
 plot(mydta)

@@ -20,6 +20,8 @@ The data are already saved in the project as "chirps.csv". To load the data into
 mydta <- read.csv("chirps.csv")
 
 head(mydta)
+
+View(mydta)
 ```
     
 ## Plot the data
