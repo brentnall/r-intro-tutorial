@@ -70,6 +70,16 @@ summary(mylm)
     
 The estimated model is y = 25.2 + 3.2x. Therefore, if our themometer was broken and we wished to measure the temperature using cricket chirps, we'd estimate it to be approximately 25.2C on average if no cricket chirps (x=0), and 25.2 + (3.2 x 2) = 31.6C if two chirps per minute, for example.
 
+Visually, the fitted regression line looks like this:
+
+```{r echo=TRUE}
+plot(mydta)
+
+grid()
+
+lines(mydta[,1], predict(mylm), col=2)
+```
+
 ## Generalisability
 
 The regression themometer is likely to only be of use in places and time of the year similar to where the data were gathered. For example, this themometer would be useless in the UK. 
