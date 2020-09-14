@@ -420,19 +420,21 @@ Vectors are an important type of object in R, and if you understand the above th
 - *Factors* provide compact ways to handle categorical data. See [Factors](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Factors). 
 
 
-## A simple analysis
+## Your first analysis
 
-To end we show some code following the process for a basic data analysis. Namely
+To end we develop some code to do a data analysis. This involves
 
-- Get data
-- Calculate summary statistics
-- Do some plots
+1. Getting some data
+2. Using the data to calculate summary statistics
+3. Looking at the data using some plots
 
 ### Get data
 
-The first thing to do in R is to load data. For this tutorial we will use R to make up some data (using computer simulation). 
+The first thing to do in R is to load data. For this tutorial we will use R to make up some data using R itself. We will consider an analysis where there are two continuous variables corresponding the the x and y-axes of a plot. In the example there is a linear relationship between them so y = x + error. 
 
-Our data will be two random normal vectors of x- and y-coordinates where y = x + error.
+The following code generates the data. You might wish to skip reading this code when you first run through the tutorial, because it uses some functions that you have not been introduced to. 
+
+The code generates data for the analysis into a *data frame* that we name `dummy`. When you run your own analysis you will usually load data from a file instead (introduced in next tutorial).
 
 ```{r, echo=TRUE}
 # Note: Anything with an hash at the start is interpreted in R as a comment, and does not do anything
@@ -445,13 +447,14 @@ myvar2 = myvar1 + rnorm(20)
 
 # 3. Then we can put them into a data frame, which is used to store data in a table (each row is a vector) 
 dummy = data.frame(x=myvar1, y=myvar2)
-
-#4. We can print out the data so you can see it 
-dummy
 ```
-(Every time you run this, you'll get different numbers in your table because a new simulation is run).
 
 ### Summary statistics
+
+First we inspect the data
+```{r, echo=TRUE}
+dummy
+```
 
 To get a quick summary of these data R has the useful function `summary()`
 
@@ -473,16 +476,20 @@ dummy$x
 ```{r exsummary, exercise=TRUE}
 summary(dummy__x)
 ```
-```{markdown exsummary-hint}
-We want to pass `dummy$x` to the function `summary()` 
-```
+
+<div id="exsummary-hint">
+**Hint:** Pass `dummy$x` to the function `summary()`
+</div>
+
 **TASK FOR YOU** Calculate the mean of the first 10 values of `y`
 ```{r exsummary2, exercise=TRUE}
 mean(dummy$__[__])
 ```
-```{markdown exsummary2-hint}
-Review the material in index vectors for what goes inside [__] 
-```
+<div id="exsummary2-hint">
+**Hint:** Extend the previous task by using `y` in place of `x`. You might wish to review the material in index vectors for what goes inside [__]: here it is `1:10`. 
+</div>
+
+
 
 We may also calculate correlation coefficients between x and y as follows.
 
@@ -494,16 +501,23 @@ cor.test(dummy$x, dummy$y)
 ```{r spearman, exercise=TRUE}
 cor.test(dummy$x, dummy$y, method=__)
 ```
+<div id="spearman-hint">
+**Hint:** Don't forget the quotation marks  
+</div>
 
 **TASK FOR YOU** Calculate Pearson correlation between x and itself (should be 1)
 
 ```{r pearson-self, exercise=TRUE}
 cor.test(dummy__, dummy__)
 ```
+<div id="pearson-self-hint">
+**Hint:** Use a dollar sign `$` to choose the column. Both should be `x`.
+</div>
+
 
 ### Plots
 
-We will next show some simple R plots (in time you might wish to use `ggplot2`, which has greater functionality but has a steeper learning curve). 
+We will next show some basic R plots (in time you might wish to use the library `ggplot2` for plots). 
 
 First, we'll plot x against y in a scatter plot.
 ```{r, echo=TRUE}
@@ -526,9 +540,9 @@ You will often wish to save the chart and put it into a report. To do this the r
 
 For example, the following code follows this to write the above chart to a pdf file called `myplot.pdf` in a directory called `charts`. 
 ```{r, echo=TRUE, results='hide'}
-pdf("charts/myplot.pdf")
-plot(dummy$x, dummy$y, xlab="TEMPERATURE", ylab="CONSUMPTION OF CHOCOLATE ICE CREAM", main="I love ice cream when it is hot")
-dev.off()
+pdf("charts/myplot.pdf") #open up file writer for pdf
+plot(dummy$x, dummy$y, xlab="TEMPERATURE", ylab="CONSUMPTION OF CHOCOLATE ICE CREAM", main="I love ice cream when it is hot") # plot command
+dev.off() #write the file
 ```
 
 So now you know how to produce a simple scatter plot in R, and save it.
@@ -538,6 +552,11 @@ So now you know how to produce a simple scatter plot in R, and save it.
 plot(dummy$__, dummy$__, xlab = __, ylab = __, main = __ )
 
 ```
+<div id="plot-example-hint">
+**Hint:** The first argument should be `y`, the second `x`. Don't forget quotation signs for `xlab`, `ylab` and `main`. If you want to leave it blank use `=""`.
+</div>
+
+
 ## Conclusion
 
 This is the end of the tutorial.

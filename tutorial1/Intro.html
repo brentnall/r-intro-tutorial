@@ -487,18 +487,19 @@ x[ c(__, __, __) ]</code></pre>
 <li><p><em>Factors</em> provide compact ways to handle categorical data. See <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Factors">Factors</a>.</p></li>
 </ul>
 </div>
-<div id="section-a-simple-analysis" class="section level2">
-<h2>A simple analysis</h2>
-<p>To end we show some code following the process for a basic data analysis. Namely</p>
-<ul>
-<li>Get data</li>
-<li>Calculate summary statistics</li>
-<li>Do some plots</li>
-</ul>
+<div id="section-your-first-analysis" class="section level2">
+<h2>Your first analysis</h2>
+<p>To end we develop some code to do a data analysis. This involves</p>
+<ol style="list-style-type: decimal">
+<li>Getting some data</li>
+<li>Using the data to calculate summary statistics</li>
+<li>Looking at the data using some plots</li>
+</ol>
 <div id="section-get-data" class="section level3">
 <h3>Get data</h3>
-<p>The first thing to do in R is to load data. For this tutorial we will use R to make up some data (using computer simulation).</p>
-<p>Our data will be two random normal vectors of x- and y-coordinates where y = x + error.</p>
+<p>The first thing to do in R is to load data. For this tutorial we will use R to make up some data using R itself. We will consider an analysis where there are two continuous variables corresponding the the x and y-axes of a plot. In the example there is a linear relationship between them so y = x + error.</p>
+<p>The following code generates the data. You might wish to skip reading this code when you first run through the tutorial, because it uses some functions that you have not been introduced to.</p>
+<p>The code generates data for the analysis into a <em>data frame</em> that we name <code>dummy</code>. When you run your own analysis you will usually load data from a file instead (introduced in next tutorial).</p>
 <pre class="r"><code># Note: Anything with an hash at the start is interpreted in R as a comment, and does not do anything
 
 # 1. The first data vector are 20 sampes from a standard Normal distribution (mean 0, sd 1)
@@ -508,52 +509,50 @@ myvar1 = rnorm(20)
 myvar2 = myvar1 + rnorm(20)
 
 # 3. Then we can put them into a data frame, which is used to store data in a table (each row is a vector) 
-dummy = data.frame(x=myvar1, y=myvar2)
-
-#4. We can print out the data so you can see it 
-dummy</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"0.70869684","2":"1.7070368"},{"1":"0.04316125","2":"0.5253311"},{"1":"-2.01046814","2":"-3.4088441"},{"1":"0.85775739","2":"0.1827861"},{"1":"1.71166815","2":"0.4781568"},{"1":"-0.37602666","2":"-2.3293922"},{"1":"0.31581594","2":"0.6833618"},{"1":"2.62866439","2":"1.7703604"},{"1":"-1.32715219","2":"-1.1040124"},{"1":"-1.79300577","2":"-0.4942393"},{"1":"-0.77366502","2":"-0.9546152"},{"1":"-0.41571051","2":"-0.2240538"},{"1":"0.32671564","2":"2.5585445"},{"1":"1.59752982","2":"1.2901800"},{"1":"0.26055643","2":"-0.8652818"},{"1":"-0.74858033","2":"-1.1740056"},{"1":"-0.77292512","2":"-0.3374007"},{"1":"1.10992665","2":"0.2279928"},{"1":"1.18509244","2":"-0.3201226"},{"1":"-0.09666616","2":"1.0180545"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-<p>(Every time you run this, you’ll get different numbers in your table because a new simulation is run).</p>
+dummy = data.frame(x=myvar1, y=myvar2)</code></pre>
 </div>
 <div id="section-summary-statistics" class="section level3">
 <h3>Summary statistics</h3>
+<p>First we inspect the data</p>
+<pre class="r"><code>dummy</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"-1.5756252","2":"-2.3181686"},{"1":"-0.2692003","2":"0.3631514"},{"1":"0.9825409","2":"0.1564728"},{"1":"-0.5323082","2":"-0.5294842"},{"1":"-1.0688582","2":"-0.8149884"},{"1":"-1.9671013","2":"-1.2467164"},{"1":"1.4260421","2":"2.0936584"},{"1":"2.5482731","2":"2.5866511"},{"1":"-2.2572080","2":"-1.9837184"},{"1":"-2.2706938","2":"-1.6386947"},{"1":"0.8015796","2":"-1.6509564"},{"1":"1.0799189","2":"1.3747362"},{"1":"0.4158523","2":"1.0405261"},{"1":"0.8531590","2":"0.1057257"},{"1":"-0.1013772","2":"0.1573061"},{"1":"-0.2876019","2":"-0.2442662"},{"1":"0.9874659","2":"1.5944401"},{"1":"0.3764861","2":"1.1987924"},{"1":"-1.5307964","2":"-1.1542283"},{"1":"0.9553248","2":"0.6324489"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p>To get a quick summary of these data R has the useful function <code>summary()</code></p>
 <pre class="r"><code>summary(dummy)</code></pre>
-<pre><code>##        x                 y           
-##  Min.   :-2.0105   Min.   :-3.40884  
-##  1st Qu.:-0.7547   1st Qu.:-0.88762  
-##  Median : 0.1519   Median :-0.02063  
-##  Mean   : 0.1216   Mean   :-0.03851  
-##  3rd Qu.: 0.9208   3rd Qu.: 0.76704  
-##  Max.   : 2.6287   Max.   : 2.55855</code></pre>
+<pre><code>##        x                  y           
+##  Min.   :-2.27069   Min.   :-2.31817  
+##  1st Qu.:-1.18434   1st Qu.:-1.17735  
+##  Median : 0.13755   Median : 0.13110  
+##  Mean   :-0.07171   Mean   :-0.01387  
+##  3rd Qu.: 0.96213   3rd Qu.: 1.08009  
+##  Max.   : 2.54827   Max.   : 2.58665</code></pre>
 <p>This tells us the minimm, maximum, median, mean, 1st quantile (75% of data above this point) and 3rd quantile (25% of data above this point) for our <code>x</code> and <code>y</code> columns, that we made up.</p>
 <p>We can also do this one statistic at a time by runnning the function (e.g. <code>mean()</code>) on a vector of data. To select a column from a dataframe one may use a dollar <code>$</code> following the dataframe name, followed by the column name. For example, to only select <code>x</code> from <code>dummy</code>:</p>
 <pre class="r"><code>#To access each column we use a dollar sign
 #e.g. x
 dummy$x</code></pre>
-<pre><code>##  [1]  0.70869684  0.04316125 -2.01046814  0.85775739  1.71166815 -0.37602666
-##  [7]  0.31581594  2.62866439 -1.32715219 -1.79300577 -0.77366502 -0.41571051
-## [13]  0.32671564  1.59752982  0.26055643 -0.74858033 -0.77292512  1.10992665
-## [19]  1.18509244 -0.09666616</code></pre>
+<pre><code>##  [1] -1.5756252 -0.2692003  0.9825409 -0.5323082 -1.0688582 -1.9671013
+##  [7]  1.4260421  2.5482731 -2.2572080 -2.2706938  0.8015796  1.0799189
+## [13]  0.4158523  0.8531590 -0.1013772 -0.2876019  0.9874659  0.3764861
+## [19] -1.5307964  0.9553248</code></pre>
 <strong>TASK FOR YOU</strong> Print out summary statistics for x only by replacing __
 <div class="tutorial-exercise" data-label="exsummary" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>summary(dummy__x)</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.checker":"NULL"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="exsummary-hint" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>We want to pass `dummy$x` to the function `summary()` </code></pre>
+<div id="section-exsummary-hint">
+<p><strong>Hint:</strong> Pass <code>dummy$x</code> to the function <code>summary()</code></p>
 </div>
 <strong>TASK FOR YOU</strong> Calculate the mean of the first 10 values of <code>y</code>
 <div class="tutorial-exercise" data-label="exsummary2" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>mean(dummy$__[__])</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.checker":"NULL"}</script>
 </div>
-<div class="tutorial-exercise-support" data-label="exsummary2-hint" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
-<pre class="text"><code>Review the material in index vectors for what goes inside [__] </code></pre>
+<div id="section-exsummary2-hint">
+<p><strong>Hint:</strong> Extend the previous task by using <code>y</code> in place of <code>x</code>. You might wish to review the material in index vectors for what goes inside [__]: here it is <code>1:10</code>.</p>
 </div>
 <p>We may also calculate correlation coefficients between x and y as follows.</p>
 <pre class="r"><code>cor.test(dummy$x, dummy$y)</code></pre>
@@ -561,35 +560,41 @@ dummy$x</code></pre>
 ##  Pearson&#39;s product-moment correlation
 ## 
 ## data:  dummy$x and dummy$y
-## t = 3.8398, df = 18, p-value = 0.0012
+## t = 6.5902, df = 18, p-value = 3.443e-06
 ## alternative hypothesis: true correlation is not equal to 0
 ## 95 percent confidence interval:
-##  0.3250195 0.8585943
+##  0.6343254 0.9353269
 ## sample estimates:
 ##       cor 
-## 0.6710278</code></pre>
+## 0.8408248</code></pre>
 <p><strong>TASK FOR YOU</strong> Calculate the Spearman correlation between x and y by typing “spearman” into the method argument</p>
 <div class="tutorial-exercise" data-label="spearman" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>cor.test(dummy$x, dummy$y, method=__)</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.checker":"NULL"}</script>
+</div>
+<div id="section-spearman-hint">
+<p><strong>Hint:</strong> Don’t forget the quotation marks</p>
 </div>
 <p><strong>TASK FOR YOU</strong> Calculate Pearson correlation between x and itself (should be 1)</p>
 <div class="tutorial-exercise" data-label="pearson-self" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>cor.test(dummy__, dummy__)</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.checker":"NULL"}</script>
 </div>
+<div id="section-pearson-self-hint">
+<p><strong>Hint:</strong> Use a dollar sign <code>$</code> to choose the column. Both should be <code>x</code>.</p>
+</div>
 </div>
 <div id="section-plots" class="section level3">
 <h3>Plots</h3>
-<p>We will next show some simple R plots (in time you might wish to use <code>ggplot2</code>, which has greater functionality but has a steeper learning curve).</p>
+<p>We will next show some basic R plots (in time you might wish to use the library <code>ggplot2</code> for plots).</p>
 <p>First, we’ll plot x against y in a scatter plot.</p>
 <pre class="r"><code>##This is a standard R scatterplot
 plot(dummy$x, dummy$y)</code></pre>
-<p><img src="Intro_files/figure-html/unnamed-chunk-6-1.png" width="624" /></p>
+<p><img src="Intro_files/figure-html/unnamed-chunk-7-1.png" width="624" /></p>
 <p>To add more and customise the plot we can use other arguments to the function <code>plot()</code>. Below adds some labels to x, y axes, and a title.</p>
 <pre class="r"><code>##This is a standard R scatterplot, but now we&#39;ve added some labels to the plot
 plot(dummy$x, dummy$y, xlab=&quot;TEMPERATURE&quot;, ylab=&quot;CONSUMPTION OF CHOCOLATE ICE CREAM&quot;, main=&quot;I love ice cream when it is hot&quot;)</code></pre>
-<p><img src="Intro_files/figure-html/unnamed-chunk-7-1.png" width="624" /></p>
+<p><img src="Intro_files/figure-html/unnamed-chunk-8-1.png" width="624" /></p>
 <p>You will often wish to save the chart and put it into a report. To do this the recipe is</p>
 <ul>
 <li>Open up the file writer. If you want to write to a PDF then the function is <code>pdf()</code>. If you want to write to a PNG it is <code>png()</code>; others include <code>jpeg()</code>, <code>tiff()</code>, <code>eps()</code>.</li>
@@ -597,14 +602,17 @@ plot(dummy$x, dummy$y, xlab=&quot;TEMPERATURE&quot;, ylab=&quot;CONSUMPTION OF C
 <li>Write the file by closing the connection to the output file with <code>dev.off()</code>.</li>
 </ul>
 <p>For example, the following code follows this to write the above chart to a pdf file called <code>myplot.pdf</code> in a directory called <code>charts</code>.</p>
-<pre class="r"><code>pdf(&quot;charts/myplot.pdf&quot;)
-plot(dummy$x, dummy$y, xlab=&quot;TEMPERATURE&quot;, ylab=&quot;CONSUMPTION OF CHOCOLATE ICE CREAM&quot;, main=&quot;I love ice cream when it is hot&quot;)
-dev.off()</code></pre>
+<pre class="r"><code>pdf(&quot;charts/myplot.pdf&quot;) #open up file writer for pdf
+plot(dummy$x, dummy$y, xlab=&quot;TEMPERATURE&quot;, ylab=&quot;CONSUMPTION OF CHOCOLATE ICE CREAM&quot;, main=&quot;I love ice cream when it is hot&quot;) # plot command
+dev.off() #write the file</code></pre>
 <p>So now you know how to produce a simple scatter plot in R, and save it.</p>
 <strong>TASK FOR YOU</strong> Reverse the axes - plot <code>x</code> on the y-axis and <code>y</code> on the x-axis. Add some different labels (make them up)
 <div class="tutorial-exercise" data-label="plot-example" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>plot(dummy$__, dummy$__, xlab = __, ylab = __, main = __ )</code></pre>
 <script type="application/json" data-opts-chunk="1">{"fig.width":6.5,"fig.height":4,"fig.retina":2,"fig.align":"default","fig.keep":"high","fig.show":"asis","out.width":624,"warning":true,"error":false,"message":true,"exercise.df_print":"paged","exercise.checker":"NULL"}</script>
+</div>
+<div id="section-plot-example-hint">
+<p><strong>Hint:</strong> The first argument should be <code>y</code>, the second <code>x</code>. Don’t forget quotation signs for <code>xlab</code>, <code>ylab</code> and <code>main</code>. If you want to leave it blank use <code>=""</code>.</p>
 </div>
 </div>
 </div>
