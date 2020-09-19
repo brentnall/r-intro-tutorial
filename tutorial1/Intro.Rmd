@@ -28,7 +28,7 @@ To use R you will need to learn to write commands. This has many advantages comp
 
 ### Learning objective
 
-In this interactuve tutorial you will be introduced to concepts and asked to edit and run blocks of R code as you go. The learning objective is to understand some of the important principles of R that are needed to analyse data. 
+In this interactive tutorial you will be introduced to concepts and asked to edit and run blocks of R code as you go. The learning objective is to understand some of the important principles of R that are needed to analyse data. 
 
 ## Using R as a calculator
 
