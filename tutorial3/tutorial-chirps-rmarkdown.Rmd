@@ -1,5 +1,5 @@
 ---
-title: Tutorial- simple linear regression example
+title: Tutorial- cricket chirps linear regression 
 output: html_document
 ---
 # Instructions

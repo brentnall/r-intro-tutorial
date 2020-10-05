@@ -20,7 +20,7 @@ The data you will analyse were downloaded from [cbioportal.org](https://www.cbio
 
 The METABRIC data consist of clincal characteristics coupled with gene expression data. In this tutorial we look at the clinical characteristics. This is similar to a first stage in prognostic modelling, to understand the existing factors, before proceeding to investigate the new ones and how they relate to the existing ones.
 
-Only a few simple analyses are done. For additional learning of R, I suggest that you try to conduct your own analysis of other factors.
+There are many analyses that could be done with these data. Once you have been through this analysis, for additional learning of R (optional), you might try your own analysis with other other factors.
 
 # Script explanation
 
