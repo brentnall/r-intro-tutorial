@@ -5,9 +5,11 @@
 - Tutorial 1, Hello R: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/brentnall/r-intro-tutorial/master?urlpath=shiny/tutorial1/Intro.Rmd)
 - Tutorial 2, Hello Data Analysis: [![Binder](http://mybinder.org/badge_logo.svg)](http://mybinder.org/v2/gh/brentnall/r-intro-tutorial/master?urlpath=shiny/tutorial2/DataAnal.Rmd)
 
-## Tutorials for basic data analysis
+## Tutorials for data analysis in RStudio
 
 - Tutorial 3, Cricket chirps
+- Tutorial 4, Chalkley count
+- Tutorial 5, Kidney function
 - Tutorial 4, METABRIC data
 
 # License
