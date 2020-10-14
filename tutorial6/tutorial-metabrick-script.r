@@ -19,7 +19,6 @@ summary(mydta)
 
 ## 4.1 Age at diagnosis
 
-par(mfrow=c(2,1))
 
 hist(mydta$Age.at.Diagnosis, xlab="Age", main="Age Histogram")
 
@@ -27,7 +26,6 @@ boxplot(mydta$Age.at.Diagnosis, xlab="Age", main="Age Boxplot", horizontal=TRUE)
 
 ## 4.2 Nodes
 
-par(mfrow=c(2,1))
 
 hist(mydta$Lymph.nodes.examined.positive, breaks=seq(0,max(mydta$Lymph.nodes.examined.positive, na.rm=TRUE), by=1), col=1, main="")
 
@@ -37,7 +35,6 @@ table(mydta$Lymph.nodes.examined.positive)
 
 ## 4.3 Tumour size
 
-par(mfrow=c(2,1))
 
 hist(mydta$Tumor.Size, xlab="Tumour size", main="Tumour size Histogram")
 
@@ -58,7 +55,6 @@ sizeneg = subset(mydta$Tumor.Size, mydta$LNpos)
 sizepos = subset(mydta$Tumor.Size, !mydta$LNpos)
 
 boxplot(sizeneg, sizepos)
-par(mfrow=c(2,1))
 hist(sizeneg, xlim=c(0,80), breaks=seq(0,200,by=5), col=1)
 hist(sizepos, xlim=c(0,80), breaks=seq(0,200,by=5), col=1)
 
