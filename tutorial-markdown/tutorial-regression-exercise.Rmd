@@ -1,0 +1,206 @@
+---
+title: R Tutorial sheet 2 - linear regression analysis 
+output: html_document
+---
+
+# Instructions
+
+Please use RStudio Cloud, or RStudio on your computer to complete this exercise sheet. The below **Tasks** indicate where you need to run some code in R. All the code needed is provided, but you will need to copy it into your own script (in order) for it to run. Based on the output from R, please try to answer all questions.
+
+The analysis is based on analysis of a research question, which is first introduced.
+
+# Scenario
+
+This scenario is based on data from the nephrology laboratory of Dr. Brian Myers, Stanford University. The data are available from https://web.stanford.edu/~hastie/CASI_files/DATA/kidney.txt . They are used as an example in the book "Computer age statistical inference" by Efron and Hastie, which is freely available [here](https://web.stanford.edu/~hastie/CASI/).
+
+
+## Research question
+
+The research question to be addressed is to quantify how healthy is the kidney of a potential donor is likely to be. This information could be used to help determine who is eligible to donate their kidney, as well as to increase transplantation success for the patient.
+
+## Analysis aims
+
+The analysis aim is to construct an effective prediction rule for a quantitative measure of kidney "fitness", based on age.
+
+## Study design 
+
+157 healthy volunteers (potential donors) were recruited, and measures of kidney function and their age were recorded. 
+
+## Methods
+
+The kidney function measure is a continuous variable that has been normalised to have mean zero; higher values correspond to better kidney function. Age in years is at the same time when kidney function was measured.
+
+# Analysis
+
+## Data preparation
+
+### Task: Load the data and inspect the first few rows
+
+*Code*
+```{r, results='hide'}
+mydta<-read.csv("kidney.txt", sep=" ") #columns separated by whitespace, not commar
+head(mydta)
+```
+
+#### Question: What are the variables in the data called, and what are their data types?
+
+#### Question: Which variables is the response or outcome variables, and which the explanatory or predictor variable?
+
+## Exploratory data analysis
+
+### Task: Create a scatter plot of age vs kidney function
+```{r, results='hide'}
+plot(mydta$age, mydta$tot, xlab="Age (y)", ylab="Measure of kidney function")
+```
+
+#### Question: Does kidney function increase or decrease with age?
+
+Inspect the chart to find out.
+
+#### Question: A potential new donor, aged 55, has appeared, and we wish to assess his kidney fitness without subjecting him to an arduous series of medical tests. What do you expect their kidney function to be based on the data?
+
+One way to answer this question is to look for people aged 50y in our data, and see their score. Only one of the 157 previously tested volunteers was age 55y - what was their kidney function? 
+
+## Linear regression
+
+### Task: Fit a linear model to the data and print out a summary
+
+*Code*
+```{r, results='hide'}
+myreg<-lm(tot~age, mydta)
+summary(myreg)
+```
+
+#### Question: How much does the measure of kidney function declines by for every 10 years of age?
+
+You should find the rate of decline indicates that younger donors are preferred for transplantation.
+
+#### Question: What is the p-value for the slope in the model?
+
+#### Question: What is the confidence interval on the rate of decline for every 10y or age?
+*Code*
+```{r, results='hide'}
+round(confint(myreg)*10,2)
+```
+
+### Task: Add the fitted linear regression to a scatter plot of the data, and confidence intervals for the mean prediction
+*Code*
+```{r, results='hide'}
+##Scatter plot
+plot(mydta$age, mydta$tot, xlab="Age (y)", ylab="Measure of kidney function")
+## Regression line
+grid()
+abline(myreg, col="red")
+## Confidence intervals
+newx <- seq(1, 90, by=0.2)
+conf_interval <- predict(myreg, newdata=data.frame(age=newx), interval="confidence",level = 0.95)
+lines(newx, conf_interval[,2], col="blue", lty=2)
+lines(newx, conf_interval[,3], col="blue", lty=2)
+```
+
+#### Question: Do you think a line fits the data well? Explain
+
+### Task: Use the linear regression model fit to estimate kidney function for people aged 55y
+*Code*
+```{r, results='hide'}
+round(predict(myreg, newdata=data.frame(age=55)),1)
+```
+
+This code uses the model to work out the expected kidney function for person aged 55y; you could obtain the same by using a calculator to work through the model fit formula, ie. `2.86 - 0.079 * 55'.
+
+
+#### Question: This is not the same as you found above when looking at people aged 55y in the data. Why not?
+
+Only one of the 157 previously tested volunteers was age 55.  Rather than use the data on this individual most applied statisticians would prefer to read off the height of the least squares regression line at age 55, which is what we calculated here. The former is the only direct evidence we have, while the regression line lets us incorporate indirect evidence for age 55 from all 157 individuals. You can see the difference between the two by looking at the plot you made above.
+
+
+### Task: Make a plot of residuals to check goodness of fit of the model
+
+*Code*
+```{r, results='hide'}
+## Residuals 
+plot(myreg,1)
+```
+
+This is a plot of residuals (observed minus fitted) against the fitted value of kidney function.
+
+#### Question: Does your plot indicate lack of fit? Explain
+
+There is little to indicate lack of fit in this plot. The red line closely tracks 0 on the y-axis, and the spread of the data points is quite constant
+
+### Task: do a QQ plot to assess normality assumption of the errors
+```{r, results='hide'}
+## QQ plot 
+plot(myreg,2)
+
+```
+
+#### Question: Does this indicate lack of fit? Explain
+
+This does not show a substantial lack of fit. The ideal fit would be a straight line, and this is not very different from that
+
+## Correlation coefficients
+Thus far we have quantified the conditional association between age and kidney function through a linear regression. We might also measure the relationship through a correlation coefficient.
+
+### Task: calculate the Pearson correlation between the two variables
+
+```{r, results='hide'}
+cor.test(mydta$age, mydta$tot)
+```
+
+#### Question: Does your finding agree with the earlier linear regression results?
+
+
+### Task: calculate the Spearman correlation between the two variables
+
+```{r, results='hide'}
+cor.test(mydta$age, mydta$tot)
+```
+
+#### Question: Does this finding agree with your Pearson correlation results? Explain why it does or does not
+```{r, results='hide'}
+cor.test(mydta$age, mydta$tot, method="spearman")
+```
+
+# Technical appendix (extension - non exam)
+
+## Regression
+
+The methodology most commonly used for so-called *linear regression analysis* was first developed by Gauss for astronomy problems. The terminology *regression* was coined by Francis Galton 100 years later, related to his work on genetic inheritance. For example, he found that tall parents had tall children, but that on average, they were slightly shorter than themselves. He called this *regression to mediocrity*! The *regression* term stuck, but not the part about mediocrity - nowadays we call it *regression to the mean*.
+
+The most basic linear regression - and the one developed by Gauss - is an algorithm that fits a line to pairs of data $x$ and $y$, and is focused on estimating (or predicting) the mean value of $y$ given $x$. It fits the line so that the sum of the squared errors (error = observed y minus predicted y) is minimised. 
+
+## Correlation
+
+Correlation is a single measure of the relationship between two variables $x$ and $y$. 
+
+It does not depend on the units of $x$ and $y$, so for example can be used to measure the strength of association between beer consumption and weight, or average temperature and height, and then to compare which is the stronger relationship. 
+
+Unlike regression it does not depend on whether one measures the relationship between $x$ and $y$, or $y$ and $x$. 
+
+The concept of correlation was introduced by Francis Galton at the end of the 19th century. This makes correlation a more recent concept than regression, being developed 100 years after Gauss was using linear regression estimation by least squares.
+
+There are several different measures of correlation in use. The most common is Pearson correlation. This measures the linear relationship between $x$ and $y$. For data $\{(x_1,y_1), \ldots,(x_n, y_n)\}$ consisting of $n$ pairs, the sample estimate of Pearson correlation $r$ is defined 
+
+\begin{eqnarray}
+r  = \frac{\sum_{i=1}^n (x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^n \sqrt{(x_i-\bar{x})^2}\sqrt{(y_i-\bar{y})^2} }
+\end{eqnarray}
+
+where $\bar{x}$ and $\bar{y}$ are the sample mean of $x,y$ respectively. Pearson's correlation $r$ ranges from -1 to +1, with 0 indicating no linear correlation. Note that r=1 *only* if the data are an exact straight line. It the variable $y$ is measured with error then $r$ is less than $1$. Thus, one almost always expects $r$ less than $1$. Some examples of different patterns and their Pearson correlation are given in the accompanying slides from the lecture.
+
+## Link between correlation and regression 
+
+While correlation and regression are different, they are closely linked. Mathematically we can re-write  the above equation as:
+\begin{eqnarray}
+r  = \frac{\textrm{cov}(X,Y)}{\textrm{sd}(X)\textrm{sd}(Y)}
+\end{eqnarray}
+where $\textrm{cov}(X,Y)$ is the covaraince of $X$ and $Y$ and $\textrm{sd}(.)$ is the standard deviation (the square root of the variance $\textrm{var}(.)$).
+
+When minimising the sum of squares the estimate of the regression parameter $\beta$ in $y= \alpha + \beta x$ is 
+\begin{eqnarray}
+\beta  =  \frac{\textrm{cov}(X,Y)}{\textrm{var}(X)}.
+\end{eqnarray}
+Thus, the covariance of $X$ and $Y$ plays a role in both regression slope estimation and Pearson's correlation $r$. The regression coefficient $\beta$ can be written in terms of Pearson correlation $r$ as
+\begin{eqnarray}
+\beta  =  r \left\{\frac{\textrm{sd}(Y)}{\textrm{sd}(X)}\right\}.
+\end{eqnarray}

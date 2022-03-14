@@ -1,0 +1,259 @@
+---
+title: KCL code club - Rmarkdown introduction
+author: Adam Brentnall
+date: 14th March 2022
+output: ioslides_presentation
+---
+
+<!-- This text is a comment and will not appear in the document that is created from this file. Please use RStudio Cloud, or RStudio on your computer to complete this tutorial.  -->
+
+# Pre-tutorial optional instructions
+
+## If you have time beforehand
+
+- Watch an overview on what R markdown is for (4m)
+  - https://youtu.be/ZzDSkBgt9xQ
+- Set up an account on RStudio Cloud 
+  - https://rstudio.cloud
+- Download a data file to your PC for use in session 
+  - http://web.stanford.edu/~hastie/CASI_files/DATA/kidney.txt
+
+- Session assumes you are familiar with R. If not, try two tutorials:
+  - http://mybinder.org/v2/gh/brentnall/r-intro-tutorial/master?urlpath=shiny/tutorial1/Intro.Rmd
+  - http://mybinder.org/v2/gh/brentnall/r-intro-tutorial/master?urlpath=shiny/tutorial2/DataAnal.Rmd
+
+# Tutorial
+
+## Outline
+
+* Aim: develop an R markdown document using some data
+* Use RStudio Cloud https://rstudio.cloud (or RStudio on your own PC)
+* Several tasks - iterations
+  + Introduce in group
+  + Then you work on your own (in breakouts for peer support if needed)
+  + Review in group
+
+# Quick start
+
+## RStudio
+
+- Go to https://rstudio.cloud 
+- Create account
+- Create new Rstudio project
+
+
+## RStudio - 1; create Rmd file
+- File > New File > R Markdown
+![Rstudio setup](slidefig/rstudio.png){width=100%}
+
+
+## RStudio - 2: install libraries (if asked)
+
+![Rstudio setup](slidefig/rstudio2.png){width=100%}
+
+
+## RStudio - 3: choose type (use default)
+
+![Rstudio setup](slidefig/rstudio3.png){width=100%}
+
+
+## RStudio - 4: markdown file code (document generated with knit)
+
+![Rstudio setup](slidefig/rstudio4.png){width=100%}
+
+## Have a look at the markdown file
+
+- Hash symbols in the code define headers, eg. `##` is a level 2 header 
+- R code chunks start with ` ```{r`
+- The simplest is ` ```{r} ... ``` `.  
+  - Run like this all code and output will appear in the document. 
+  - You may not always want this, and there are options you can give to hide the code and / or output from R (see later)
+  - the code chunks in the document you created include names (eg. ` ```{r cars}` where `cars` is a name that you can choose. Naming chunks can be useful for debugging (each one must be unique if used), but is not mandatory
+
+
+## RStudio - 5: click knit, save if needed (.Rmd)
+
+![Rstudio setup](slidefig/rstudio5.png){width=100%}
+
+## RStudio - 6: View the rendered document
+
+![Rstudio setup](slidefig/rstudio6.png){width=100%}
+
+# Load your own data 
+
+## Data
+
+- Data from the nephrology laboratory of Dr. Brian Myers, Stanford University (http://web.stanford.edu/~hastie/CASI_files/DATA/kidney.txt)
+  - download this file to your computer by following link
+- Aim to quantify kidney funciton vs age
+- 157 healthy volunteers were recruited
+- Will generate an Rmarkdown document
+
+## RStudio: Load data into project (from file you downloaded to your PC)
+
+![Rstudio setup](slidefig/rstudiob1.png){height=100%}
+
+
+## RStudio: Data loaded
+
+![Rstudio setup](slidefig/rstudiob2.png){width=100%}
+
+
+## Edit your markdown file 
+
+- To start your document, I suggest to delete all the code ***below*** ``## R Markdown`` in the code (or add your code below the current code) 
+
+- TASK: create an R segment to load the kidney data using ` ```{r} ... ``` `, by including the following R code 
+
+```{r, eval=FALSE}
+mydta<-read.csv("kidney.txt", sep=" ") ##load txt file 
+head(mydta) ##print out first few rows
+```
+- TASK: Knit the file to view the document
+
+## Task 2
+- We can run code without showing it, but displaying the output, by using `echo=FALSE` in the start of the code chunk.
+
+- Task: repeat the code but now show the output but not the code by using ` ```{r, echo=FALSE} ` at the start of the chunk (the difference is `echo=FALSE`).
+
+## Task 3
+- We can run code without presenting anything in the document by using `include=FALSE` in the start of the code chunk.
+- Repeat your code to load the data but do not show output or the code by using ` ```{r, include=FALSE} ` at the start of the code chunk
+
+
+```{r, include=FALSE}
+mydta<-read.csv("kidney.txt", sep=" ") 
+head(mydta) ##print out first few rows
+```
+
+```{r libraries, include=FALSE}
+
+library("tidyverse")
+
+library("knitr")
+```
+# Summary statistics in your markdown document
+
+## Method 1: Print out as seen in R
+
+- You may print out to your document R output using a simple ` ```{r} ... ``` ` chunk.
+- For example, try adding the following code below where you loaded the data
+```{r}
+summary(mydta) 
+
+```
+## Method 2: Add as a table
+
+- Alternatively you may use this function to format as a table, if you start the chunk ` ```{r results='asis'} `.
+
+```{r results='asis', eval=FALSE}                                                        
+kable(summary(mydta), caption="", align='r', row.names=FALSE)
+
+```
+## Method 3: Create a bespoke table
+
+- You can create any table you like in this way. Try the following
+
+```{r results='asis', eval=FALSE}                                                        
+
+mytab<-rbind(quantile(mydta$age), quantile(mydta$tot))
+rownames(mytab)<-c("Age", "Kidney function")
+kable(mytab, caption="Quantile of age and kidney function",
+      align='r', row.names=TRUE)
+
+```
+- If you do not wish to display the code in your document then add `echo=FALSE` to the chunk start, eg. ` ```{r results='asis',echo=FALSE} `.
+
+#  Plots
+
+## Task: Create a scatter plot of age vs kidney function
+
+- One way to include the plot is to just write the command in a `r` chunk
+
+```{r, eval=FALSE}
+
+plot(mydta$age, mydta$tot, xlab="Age (y)",
+     ylab="Measure of kidney function")
+
+```
+## Task: Save scatter plot as a png file and display
+
+- Another way is to save as a graphics file (eg. png) and then include in the text.
+
+```{r, eval=FALSE}
+png("myplot.png")
+plot(mydta$age, mydta$tot, xlab="Age (y)",
+     ylab="Measure of kidney function")
+dev.off()
+
+```
+- Add this to your markdown text outside the code chunk: ` ![Kidney function vs age](myplot.png)`
+- The chart should then show when you knit the document
+
+# Other analysis
+
+## Linear regression
+
+- Q: Can you fit a linear model to the data and print out a summary showing R code in your document?
+
+```{r}
+myreg<-lm(tot~age, mydta)
+summary(myreg)
+```
+
+## Displaying summary statistics in the text 
+
+- Output from R can be embedded inline in the document
+- For exampe a confidence interval on the rate of decline for every 1y of age may be determined as:
+
+```{r, eval=FALSE}
+myci<-format(round( cbind( coef(myreg), confint(myreg)),3), nsmall=3)
+mycitxt<-paste0(myci[2,1], " (95%CI", myci[2,2], " to ", myci[2,3], ")")
+
+```
+- This can be included by adding `` r mycitxt `` surrounded by a single ` on either side.
+
+## Task: do linear regression plot
+
+- Display the following chart in your report
+```{r, eval=FALSE}
+##Scatter plot
+plot(mydta$age, mydta$tot, xlab="Age (y)",
+     ylab="Measure of kidney function")
+## Regression line
+grid()
+abline(myreg, col="red")
+## Confidence intervals
+newx <- seq(1, 90, by=0.2)
+conf_interval <- predict(myreg, newdata=data.frame(age=newx),
+                         interval="confidence",level = 0.95)
+lines(newx, conf_interval[,2], col="blue", lty=2)
+lines(newx, conf_interval[,3], col="blue", lty=2)
+```
+
+## Goodness of fit
+Plot some goodness of fit checks in your report
+```{r, eval=FALSE}
+## Residuals 
+plot(myreg,1)
+plot(myreg,2)
+
+```
+# Conclusion
+
+## Summary
+- R Markdown lets you combine your code into a report in a reproducible manner
+- Can hide or show what you like in the report
+- Can create much more than documents (this presentation done in Rmarkdown too)
+
+
+## Further resources
+
+- Video overview (4m)
+  - https://youtu.be/ZzDSkBgt9xQ
+- RStudio docs
+  - https://rmarkdown.rstudio.com/
+- Reference book
+  - https://bookdown.org/yihui/rmarkdown
+- Cheat sheet
+  - https://rmarkdown.rstudio.com/lesson-15.html
