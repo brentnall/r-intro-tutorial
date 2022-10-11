@@ -22,7 +22,7 @@ You can learn more about R at [r-project.org](https://www.r-project.org/about.ht
 ### Why is R a good choice for analysis 
 R is distributed for free (under the GNU General Public License) and used by many people around the world to analyse data.  
 
-Some statistical software such as SPSS and PRISM are designed that you run analysis by clicking on menus and selecting the analysis to run. This is a quick way to get started, but in the long run can cost more of your time than software based on programming. 
+Some statistical software such as SPSS and PRISM are designed that you run analysis by clicking on menus and selecting the analysis to run. This is a quick way to get started, but in the long run it can cost more of your time than software based on programming. 
 
 To use R you will need to learn to write commands. This has many advantages compared with point-and-click software, including the ability to quickly re-run analysis if the data change, and reproducibility. There is a steeper learning curve than point-and-click software, but investing in learning R may pay handsome dividends. There are many books, online forums and other sources for help learning R. 
 
@@ -411,13 +411,71 @@ x[ c(__, __, __) ]
 
 If you use R beyond this course I'd recommend to learn the `tidyverse` approach to manipulating data. It has an even steeper initial learning curve than the above, BUT is very much more powerful and useful.
 
+## Data frames
+
+Vectors are an important type of object in R, but more often you will have multiple vectors stitched together. For example, you might have data where each row is an individual, and each column is something about the individual. The columns might record the individuals id number, their age, their weight, and gene expression for 2 different genes. Such a structure could be called a table, but in R we most often define them using a *data frame*. 
+
+*Data frames* are matrix-like structures in which the columns can be of different types. As just noted, you can think of data frames as 'data matrices' or 'data tables' with one row per observational unit but with (possibly) both numerical and categorical variables in the columns. More information is in the manual: [Data frames](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Data-frames).
+
+We next show how to create a data frame similar to described above from some vectors.
+
+```{r save-dataframe, echo=TRUE}
+# vector of ids
+d_id = c("id1", "id2", "id3", "id4", "id5")
+#vector of ages
+d_age = c(50, 51, 55, 60, NA)
+#vector of weight
+d_weight=c(80, 70, 60, 55, 90)
+#vector with gene expression (simulated from normal distribution)
+d_gene1=rnorm(5)
+#vector with gene expression (simulated from normal distribution)
+d_gene2 = rnorm(5)
+#data frame, combining all the above
+my_data_frame = data.frame(id = d_id,
+                   age = d_age,
+                   weight = d_weight,
+                   gene1 = d_gene1,
+                   gene2 = d_gene2)
+#print out the data frame
+print(my_data_frame)
+```
+
+This is one way to create a data frame, but more often your data will come from an external file, such as a CSV or Excel file. These can be loaded directly without having to type all the data in as above. You will see their use later on.
+
+Once you have a dataframe in your R session you can access the data elements (columns) using a dollar sign $, or the column number. For example the below prints age.
+```{r print-dataframe, echo=TRUE}
+
+print(my_data_frame$age)
+print(my_data_frame[,2])
+```
+*TASK FOR YOU. Calculate mean of gene1, filling in the blanks*
+
+```{r dataframemean, exercise=TRUE}
+## set up data (leave this)
+d_id = c("id1", "id2", "id3", "id4", "id5")
+d_age = c(50, 51, 55, 60, NA)
+d_weight=c(80, 70, 60, 55, 90)
+d_gene1=rnorm(5)
+d_gene2 = rnorm(5)
+my_data_frame = data.frame(id = d_id,
+                   age = d_age,
+                   weight = d_weight,
+                   gene1 = d_gene1,
+                   gene2 = d_gene2)
+## edit below to calculate mean gene2 using the data frame
+mean( my_data_frame$__ )
+mean( my_data_frame[,__] )
+
+```
+<div id="dataframemean-hint">
+Put the column name after the dollar sign (`gene2`), and the column number inside the square brackets (5).
+</div>
+
 ## Other data structures
 
-Vectors are an important type of object in R, and if you understand the above then it is easier to work with other structures. These two re quite useful to understand --
+There are other data structures that you might use in R. A final one is a *Factor*.
 
-- *Data frames* are matrix-like structures in which the columns can be of different types. Think of data frames as 'data matrices' with one row per observational unit but with (possibly) both numerical and categorical variables. Many experiments are best described by data frames: the treatments are categorical but the response is numeric. See [Data frames](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Data-frames).
-
-- *Factors* provide compact ways to handle categorical data. See [Factors](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Factors). 
+These provide compact ways to handle categorical data. See [Factors](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Factors). 
 
 
 ## Your first analysis
