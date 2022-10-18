@@ -422,7 +422,7 @@ There is a much stronger correlation when on species basis only, as expected.
 
 ## Two-group comparisons
 
-We finally use the iris data to demonstrate some methods used to compare two independent groups.
+We next use the iris data to demonstrate some methods used to compare two independent groups.
 
 We demonstrate by looking at the sepal length in the versicolor and virginica species (i.e. two groups).
 
@@ -460,6 +460,126 @@ The Wilcoxon (non-parametric) test follows the same structure, but is called `wi
 __(versicol$Sepal.Length, virginica$Sepal.Length)
 
 ```
+
+## Linear regression
+
+We finally use the iris data to demonstrate linear regression in R.
+
+We demonstrate by looking at the sepal length vs petal length, firstly for the versicolor species.
+
+We first plot the data to assess the relationship visually.
+
+```{r, echo=TRUE}
+plot(versicol$Petal.Length,versicol$Sepal.Length, xlab="Sepal Length (cm)", ylab="Petal length (cm)")
+```
+
+As expected, there does appear to be an association. Next we fit a linear regression model to these data, and print the summary and confidence intervals on the regression coefficients.
+
+```{r, echo=TRUE}
+myreg<-lm(Sepal.Length ~ Petal.Length, versicol)
+summary(myreg)
+round(confint(myreg),2)
+```
+```{r question-absrisk3}
+question_radio(
+  "What is the estimated intercept and 95%CI to 2 decimal places (dp))?",
+  answer("2.41 (95%CI 1.51 to 3.30)", correct=TRUE),
+  answer("0.82 (95%CI 0.62 to 1.04)"),
+  answer("2.41 (95%CI 0.45 to 5.40)"),
+  answer("0.83 (95%CI 0.10 to 7.95)"),
+  allow_retry = TRUE,
+  random_answer_order=TRUE)
+```
+
+We may add the fitted regression line to the scatter plot as follows.
+
+```{r, echo=TRUE}
+##scatter plot as above
+plot(versicol$Petal.Length,versicol$Sepal.Length, xlab="Sepal Length (cm)", ylab="Petal length (cm)")
+## add grid based on x/y axis ticks
+grid()
+## add regression line
+abline(myreg, col="red")
+# add confidence intervals to regression line
+## x-values at which to calculate confidence interval
+newx <- seq(2, 6, by=0.2)
+## confidence interval at the x-values
+conf_interval <- predict(myreg, newdata=data.frame(Petal.Length=newx), interval="confidence",level = 0.95)
+## add the confidence interval lines to plot
+lines(newx, conf_interval[,2], col="blue", lty=2)
+lines(newx, conf_interval[,3], col="blue", lty=2)
+
+```
+*Based on the fit shown in the plot, do you think a line looks a good model for the data?*
+
+It looks reasonable to my eye. Another way to check your intuition is to use plots of residuals shown in the video lectures from STAT3. 
+
+The following plot is a plot of residuals (observed minus fitted) against fitted.
+
+```{r, echo=TRUE}
+plot(myreg,1)
+```
+
+If the model is a good fit then we expect the residuals to be randomly distributed about zero. If a line is not appropriate then there will be some sort of pattern in this plot. The red line shown is a fitted shape based on a flexible model- if there is a departure from a linear model this will not be flat. There is no real pattern in this plot, which confirms a line is reasonable.
+
+The output from the linear model also includes p-values for the intercept and slope. Both are small. They are calculated using a theory-based inference procedure that assume Normality of the residuals. The following is a so-called QQ plot to check Normality informally. If the plots follow the diagnoal line, then there is some evidence to support the Normal distribution assumption used for the p-values.
+
+
+```{r, echo=TRUE}
+plot(myreg,2)
+```
+
+This also appears fine.
+
+To illustrate what could happen when a linear model is not a good fit, and how the plots above look, we next repeat the analysis but fit to all species together.
+
+
+```{r, echo=TRUE}
+plot(iris$Petal.Length,iris$Sepal.Length, xlab="Sepal Length (cm)", ylab="Petal length (cm)")
+```
+
+Just by ploting the data we can see that a linear might be reasonable for the right hand side (from approx 3 on the x-axis), but not to the whole data.
+
+*Q: Repeat the regression analysis above, but using the complete data which is in the `iris` dataframe. Replace __ below with the correct text to do this.*.
+
+
+```{r repeat-ref2, echo=TRUE, exercise=TRUE}
+##scatter plot as above
+plot(__$Petal.Length, __$Sepal.Length, xlab="Sepal Length (cm)", ylab="Petal length (cm)")
+## add grid based on x/y axis ticks
+grid()
+## fit regression
+myreg2<-lm(Sepal.Length ~ Petal.Length, iris )
+## add regression line
+abline(__, col="red")
+# add confidence intervals to regression line
+## x-values at which to calculate confidence interval
+newx <- seq(1, 8, by=0.2)
+## confidence interval at the x-values
+conf_interval <- predict(__, newdata=data.frame(Petal.Length=newx), interval="confidence",level = 0.95)
+## add the confidence interval lines to plot
+lines(newx, conf_interval[,2], col="blue", lty=2)
+lines(newx, conf_interval[,3], col="blue", lty=2)
+
+```
+<div id="repeat-ref2-hint">
+**Hint:** replace __ with iris, or myreg2 as appropriate
+</div>
+
+*Q: Now do the diagnostic plots above on the residuals from this model*
+
+```{r repeat-ref3, echo=TRUE, exercise=TRUE}
+myreg2<-lm(Sepal.Length ~ Petal.Length, iris )
+plot(__,1)
+
+```
+<div id="repeat-ref3-hint">
+**Hint:** replace __ with myreg
+</div>
+
+*Q: Can you identify where the model lacks fit, and how this is reflected in the residual plot you did?*
+
+In this case a linear regression with a single intercept and slope does not fit the data well. However, a model that allowed a different slope and intercept for each species is likely to be appropriate and can also be fitted within the linear regression framework (multiple regression). If you wish to extend your knowledge of regression, perhaps look this up. 
 
 ## Conclusion
 
