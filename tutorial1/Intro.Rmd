@@ -490,11 +490,9 @@ To end we develop some code to do a data analysis. This involves
 
 The first thing to do in R is to load data. For this tutorial we will use R to make up some data using R itself. We will consider an analysis where there are two continuous variables corresponding the the x and y-axes of a plot. In the example there is a linear relationship between them so y = x + error. 
 
-The following code generates the data. You might wish to skip reading this code when you first run through the tutorial, because it uses some functions that you have not been introduced to. 
+The data is saved in a *data frame* that I named `dummy`. When you run your own analysis you will usually load data from a file instead (introduced in next tutorial).
 
-The code generates data for the analysis into a *data frame* that we name `dummy`. When you run your own analysis you will usually load data from a file instead (introduced in next tutorial).
-
-```{r, echo=TRUE}
+```{r datagen, echo=TRUE}
 # Note: Anything with an hash at the start is interpreted in R as a comment, and does not do anything
 
 # 1. The first data vector are 20 sampes from a standard Normal distribution (mean 0, sd 1)
@@ -509,14 +507,14 @@ dummy = data.frame(x=myvar1, y=myvar2)
 
 ### Summary statistics
 
-First we inspect the data
-```{r, echo=TRUE}
+First inspect the data
+```{r inspectdata, exercise=TRUE, exercise.setup="datagen"}
 dummy
 ```
 
 To get a quick summary of these data R has the useful function `summary()`
 
-```{r, echo=TRUE}
+```{r sumdata, exercise=TRUE, exercise.setup="datagen"}
 summary(dummy)
 ```
 
@@ -524,14 +522,14 @@ This tells us the minimm, maximum, median, mean, 1st quantile (75% of data above
 
 We can also do this one statistic at a time by runnning the function (e.g. `mean()`) on a vector of data. To select a column from a dataframe one may use a dollar `$` following the dataframe name, followed by the column name. For example, to only select `x` from `dummy`:
 
-```{r, echo=TRUE}
+```{r onlyx, exercise=TRUE, exercise.setup="datagen"}
 #To access each column we use a dollar sign
 #e.g. x
 dummy$x
 ```
 
 **TASK FOR YOU** Print out summary statistics for x only by replacing __
-```{r exsummary, exercise=TRUE}
+```{r exsummary, exercise=TRUE, exercise.setup="datagen"}
 summary(dummy__x)
 ```
 
@@ -540,7 +538,7 @@ summary(dummy__x)
 </div>
 
 **TASK FOR YOU** Calculate the mean of the first 10 values of `y`
-```{r exsummary2, exercise=TRUE}
+```{r exsummary2, exercise=TRUE, exercise.setup="datagen"}
 mean(dummy$__[__])
 ```
 <div id="exsummary2-hint">
@@ -551,12 +549,12 @@ mean(dummy$__[__])
 
 We may also calculate correlation coefficients between x and y as follows.
 
-```{r, echo=TRUE}
+```{r cortest, exercise=TRUE, exercise.setup="datagen"}
 cor.test(dummy$x, dummy$y)
 ```
 **TASK FOR YOU** Calculate the Spearman correlation between x and y by typing "spearman" into the method argument
 
-```{r spearman, exercise=TRUE}
+```{r spearman, exercise=TRUE, exercise.setup="datagen"}
 cor.test(dummy$x, dummy$y, method=__)
 ```
 <div id="spearman-hint">
@@ -565,7 +563,7 @@ cor.test(dummy$x, dummy$y, method=__)
 
 **TASK FOR YOU** Calculate Pearson correlation between x and itself (should be 1)
 
-```{r pearson-self, exercise=TRUE}
+```{r pearson-self, exercise=TRUE, exercise.setup="datagen"}
 cor.test(dummy__, dummy__)
 ```
 <div id="pearson-self-hint">
@@ -578,14 +576,14 @@ cor.test(dummy__, dummy__)
 We will next show some basic R plots (in time you might wish to use the library `ggplot2` for plots). 
 
 First, we'll plot x against y in a scatter plot.
-```{r, echo=TRUE}
+```{r plottest, exercise=TRUE, exercise.setup="datagen"}
 ##This is a standard R scatterplot
 plot(dummy$x, dummy$y)
 ```
 
 To add more and customise the plot we can use other arguments to the function `plot()`. Below adds some labels to x, y axes, and a title.
 
-```{r, echo=TRUE}
+```{r plottest2, exercise=TRUE, exercise.setup="datagen"}
 ##This is a standard R scatterplot, but now we've added some labels to the plot
 plot(dummy$x, dummy$y, xlab="TEMPERATURE", ylab="CONSUMPTION OF CHOCOLATE ICE CREAM", main="I love ice cream when it is hot")
 ```
@@ -596,9 +594,9 @@ You will often wish to save the chart and put it into a report. To do this the r
 - Do all the commands for your plots
 - Write the file by closing the connection to the output file with `dev.off()`.
 
-For example, the following code follows this to write the above chart to a pdf file called `myplot.pdf` in a directory called `charts`. 
-```{r, echo=TRUE, results='hide'}
-pdf("charts/myplot.pdf") #open up file writer for pdf
+For example, the following code follows this to write the above chart to a pdf file called `myplot.pdf`. 
+```{r plottest3, exercise=TRUE, exercise.setup="datagen"}
+pdf("myplot.pdf") #open up file writer for pdf
 plot(dummy$x, dummy$y, xlab="TEMPERATURE", ylab="CONSUMPTION OF CHOCOLATE ICE CREAM", main="I love ice cream when it is hot") # plot command
 dev.off() #write the file
 ```
@@ -606,7 +604,7 @@ dev.off() #write the file
 So now you know how to produce a simple scatter plot in R, and save it.
 
 **TASK FOR YOU** Reverse the axes - plot `x` on the y-axis and `y` on the x-axis. Add some different labels (make them up)
-```{r plot-example, exercise=TRUE}
+```{r plot-example, exercise=TRUE, exercise.setup="datagen"}
 plot(dummy$__, dummy$__, xlab = __, ylab = __, main = __ )
 
 ```

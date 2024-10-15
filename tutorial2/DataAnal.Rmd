@@ -50,19 +50,18 @@ write.csv(file="iris-out.csv", iris, row.names=FALSE)
 ```
 This created a CSV file called `iris-out.csv`.  
 
-How can we load a CSV file? One way is through `read.csv()`. For example, to load the iris data into an object we call *iris2* use:
+How can we load a CSV file? One way is through `read.csv()`. For example, to load the iris data into an object we call *iris* use:
 
 ```{r, echo=TRUE}
-iris2 = read.csv("iris-out.csv")
+iris = read.csv("iris-out.csv")
 ```
-There are now two identical datasets in R: iris and iris2. 
 
-*Now your turn: write the command to display the first few rows on 'iris2' that we just loaded *
+*Now your turn: write the command to display the first few rows on 'iris' data*
 ```{r head-ex, exercise=TRUE}
 head(__) 
 ```
 <div id="head-ex-hint">
-**Hint:** replace __ with iris2
+**Hint:** replace __ with iris
 </div>
 
 
@@ -254,6 +253,10 @@ The histograms also look a little different than earlier on, because we did the 
 
 
 ```{r extapsum3, exercise=TRUE,fig.width=6, fig.height=8} 
+setosa = subset(iris, iris$Species == "setosa")
+
+versicol = subset(iris, iris$Species == "versicolor")
+
 par(mfrow=c(__,1))
 
 hist(__$Petal.Width, xlim=c(0, __), col=__, breaks=seq(0, 2.6, by=0.2)) 
@@ -274,7 +277,7 @@ An alternative way to show the distribution is through a boxplot.
 
 In R if you call the `plot()` function with a *factor* variable (such as Species) first, followed by the numeric variable (such as petal length) then it will produce a boxplot. For example
 
-```{r, echo=TRUE}
+```{r plotmea, exercise=TRUE}
 plot(iris$Species,iris$Petal.Length, ylab="Petal Length")
 ```
 
@@ -282,6 +285,8 @@ An alternative is to use the function `boxplot()`.
 
 *Your turn: create a box plot of petal length for virginica subtype *
 ```{r boxplotex, exercise=TRUE}
+virginica = subset(iris, iris$Species == "virginica")
+
 boxplot(virginica$__)
 ```
 <div id="boxplotex-hint">
@@ -290,7 +295,7 @@ boxplot(virginica$__)
 
 It is also possible to put boxplot of subgroups side by side using the `split()` function
 
-```{r, echo=TRUE}
+```{r plotmeb, exercise=TRUE}
 boxplot( split( iris$Petal.Length, iris$Species) )
 ```
 
@@ -310,7 +315,7 @@ boxplot( __( iris$__, iris$Species), ylab=__ )
 
 Next lets look at the association between variables by using scatter plots. First plot petal length against sepal length. 
 
-```{r, echo=TRUE}
+```{r plotmec, exercise=TRUE}
 plot(iris$Petal.Length, iris$Sepal.Length)
 ```
 
@@ -318,6 +323,10 @@ This combines the different species. To look at them separately one might plot t
 
 *Task for you: repeat the plot with `setosa` and `virginica` data only *
 ```{r scatterex1, exercise=TRUE}
+setosa = subset(iris, iris$Species == "setosa")
+
+versicol = subset(iris, iris$Species == "versicolor")
+
 par(mfrow=c(1,2))
 
 plot(__$Petal.Length, __$Sepal.Length)
@@ -332,7 +341,7 @@ A better aproach is to include all species on the same plot, but to use differen
 - `pch` option to choose the plotting character 
 
 
-```{r, echo=TRUE}
+```{r plotmed, exercise=TRUE}
 iris$colour = as.integer( iris$Species ) ##Species is a factor, as.integer() converts it to a number to be used for colour choice
 
 
@@ -342,6 +351,8 @@ plot(iris$Petal.Length, iris$Sepal.Length, col = iris$colour, pch=iris$colour)
 
 *Task for you: do the same plot but for Petal Width vs Petal Length, and add x-label and y-labels *
 ```{r scatterex2, exercise=TRUE}
+iris$colour = as.integer( iris$Species ) ##Species is a factor, as.integer() converts it to a number to be used for colour choice
+
 
 plot(iris$__, iris$__, col = iris$colour, pch=iris$colour, xlab=__, ylab=__)
 
@@ -352,7 +363,8 @@ plot(iris$__, iris$__, col = iris$colour, pch=iris$colour, xlab=__, ylab=__)
 
 R has a poor choice of colours by default, because some people cannot see the difference between red and green. But we can change the colours as we like. For example, suppose we want 1 to translate to black, 2 to purple and 3 to orange.
 
-```{r, echo=TRUE}
+```{r plotmecol, exercise=TRUE}
+iris$colour = as.integer( iris$Species ) ##Species is a factor, as.integer() converts it to a number to be used for colour choice
 
 plot(iris$Petal.Length, iris$Sepal.Length, col = c("black", "purple", "orange")[iris$colour], pch=iris$colour)
 
@@ -361,7 +373,9 @@ plot(iris$Petal.Length, iris$Sepal.Length, col = c("black", "purple", "orange")[
 It is possible to add a legend to the chart, to identify which points correspond to which species by using the `legend()` function.
 
 
-```{r, echo=TRUE}
+```{r plotmee, exercise=TRUE}
+
+iris$colour = as.integer( iris$Species ) ##Species is a factor, as.integer() converts it to a number to be used for colour choice
 
 plot(iris$Petal.Length, iris$Sepal.Length, col = c("black", "purple", "orange")[iris$colour], pch=iris$colour)
 
@@ -373,6 +387,8 @@ The first argument specifies where to place the key ("topleft"). The second are 
 *Task for you: do the same plot but give for Petal Width vs Petal Length, and add x-label and y-labels. Then add the legend to "bottomright", using half size characters (`cex`=0.5)*
 ```{r scatterex3, exercise=TRUE}
 
+iris$colour = as.integer( iris$Species ) ##Species is a factor, as.integer() converts it to a number to be used for colour choice
+
 plot(iris$__, iris$__, pch = iris$colour, col=c("black", "purple", "orange")[iris$colour], xlab=__, ylab=__)
 
 legend(__, c("Setosa", "Versicolor", "Virginica"), col=c("black", "purple", "orange"), pch=1:3, cex=0.5)
@@ -381,7 +397,9 @@ legend(__, c("Setosa", "Versicolor", "Virginica"), col=c("black", "purple", "ora
 
 Lastly, a quick way to plot all the variables (Petal and sepal length and width) against each other in the same chart is to use a function called `pairs()`. This does a so-called matrix plot of the variables against each other.
 
-```{r, echo=TRUE}
+```{r plotshow, exercise=TRUE}
+iris$colour = as.integer( iris$Species ) ##Species is a factor, as.integer() converts it to a number to be used for colour choice
+
 pairs(iris[,1:4], pch=iris$colour, col=c("black", "purple", "orange")[iris$colour])
 ```
 
@@ -409,6 +427,8 @@ cor.test( iris$__, iris$__, method="spearman")
 
 
 ```{r corexer, exercise=TRUE}
+setosa = subset(iris, iris$Species == "setosa")
+
 cor.test(__$Sepal.Length, __$Sepal.Width, method= __) 
 ```
 
@@ -449,6 +469,10 @@ The output does a t-test. It gives the t-statistic and associated p-value. It al
 *How would you do a t-test for Sepal Width? *
 
 ```{r ex-ttest, exercise=TRUE}
+versicol = subset(iris, iris$Species == "versicolor")
+
+virginica = subset(iris, iris$Species == "virginica")
+
 t.test(versicol$__, virginica$__)
 ```
 
@@ -457,6 +481,11 @@ The Wilcoxon (non-parametric) test follows the same structure, but is called `wi
 *Try to do a wilcoxon test for Sepal Length *
 
 ```{r ex-wilctest, exercise=TRUE}
+
+versicol = subset(iris, iris$Species == "versicolor")
+
+virginica = subset(iris, iris$Species == "virginica")
+
 __(versicol$Sepal.Length, virginica$Sepal.Length)
 
 ```
@@ -510,28 +539,11 @@ lines(newx, conf_interval[,2], col="blue", lty=2)
 lines(newx, conf_interval[,3], col="blue", lty=2)
 
 ```
+
+
 *Based on the fit shown in the plot, do you think a line looks a good model for the data?*
 
-It looks reasonable to my eye. Another way to check your intuition is to use plots of residuals shown in the video lectures from STAT3. 
-
-The following plot is a plot of residuals (observed minus fitted) against fitted.
-
-```{r, echo=TRUE}
-plot(myreg,1)
-```
-
-If the model is a good fit then we expect the residuals to be randomly distributed about zero. If a line is not appropriate then there will be some sort of pattern in this plot. The red line shown is a fitted shape based on a flexible model- if there is a departure from a linear model this will not be flat. There is no real pattern in this plot, which confirms a line is reasonable.
-
-The output from the linear model also includes p-values for the intercept and slope. Both are small. They are calculated using a theory-based inference procedure that assume Normality of the residuals. The following is a so-called QQ plot to check Normality informally. If the plots follow the diagnoal line, then there is some evidence to support the Normal distribution assumption used for the p-values.
-
-
-```{r, echo=TRUE}
-plot(myreg,2)
-```
-
-This also appears fine.
-
-To illustrate what could happen when a linear model is not a good fit, and how the plots above look, we next repeat the analysis but fit to all species together.
+It looks reasonable to my eye. To illustrate what could happen when a linear model is not a good fit, and how the plots above look, we next repeat the analysis but fit to all species together.
 
 
 ```{r, echo=TRUE}
@@ -566,20 +578,8 @@ lines(newx, conf_interval[,3], col="blue", lty=2)
 **Hint:** replace __ with iris, or myreg2 as appropriate
 </div>
 
-*Q: Now do the diagnostic plots above on the residuals from this model*
 
-```{r repeat-ref3, echo=TRUE, exercise=TRUE}
-myreg2<-lm(Sepal.Length ~ Petal.Length, iris )
-plot(__,1)
 
-```
-<div id="repeat-ref3-hint">
-**Hint:** replace __ with myreg
-</div>
-
-*Q: Can you identify where the model lacks fit, and how this is reflected in the residual plot you did?*
-
-In this case a linear regression with a single intercept and slope does not fit the data well. However, a model that allowed a different slope and intercept for each species is likely to be appropriate and can also be fitted within the linear regression framework (multiple regression). If you wish to extend your knowledge of regression, perhaps look this up. 
 
 ## Conclusion
 
